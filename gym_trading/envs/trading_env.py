@@ -8,7 +8,7 @@ from gym_trading.envs.trading_game import TradingGame
 class TradingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, n_samples=1000, buy_fee=0.25, sell_fee=0.25):
+    def __init__(self, n_samples=730, buy_fee=0.5, sell_fee=0.5):  # 2 years
         self.action_space = Discrete(3)
         self.tr_game = TradingGame(n_samples, buy_fee, sell_fee)
 
@@ -41,6 +41,8 @@ class TradingEnv(gym.Env):
 
     def render(self, mode='human', close=False):
         idx = self.tr_game.status
+
+        plt.clf()
 
         plt.plot(self.tr_game.dates[:idx], self.tr_game.prices[:idx], label='Price')
 

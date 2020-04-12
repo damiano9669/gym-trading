@@ -16,15 +16,4 @@ def load_data(n_samples=1000):
 
     prices = (high + low) / 2
 
-    return dates.tolist(), prices.to_numpy(dtype=np.float32)
-
-
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-
-    dates, prices = load_data(1000)
-
-    print(prices.shape)
-
-    plt.plot(dates, prices)
-    plt.show()
+    return dates.tolist(), prices.to_numpy(dtype=np.float64)

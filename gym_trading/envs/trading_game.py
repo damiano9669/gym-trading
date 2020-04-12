@@ -63,21 +63,31 @@ class TradingGame():
             return False
 
     def reset(self):
-        self.actions = {'x': [], 'y': [], 'action': []}
+        self.sell_actions = {'x': [], 'y': []}
+        self.buy_actions = {'x': [], 'y': []}
         self.amount = self.init_amount = 100  # USD
         self.currency = 'USD'
         self.status = 0  # 0 <= status < len(dates)
 
 
 if __name__ == '__main__':
-    tr_game = TradingGame(100)
 
-    tr_game.reset()
+    tr = TradingGame(100, 1, 1)
 
-    tr_game.buy()
+    print('My wallet:', tr.amount, tr.currency)
+    print('Current price:', tr.get_current_price())
 
-    tr_game.sell()
+    print('BUY')
+    tr.buy()
 
-    tr_game.step()
+    done = False
+    while not done:
+        done = tr.step()
 
-    print(tr_game.get_reward())
+    print('SELL')
+    tr.sell()
+
+    print('My wallet:', tr.amount, tr.currency)
+    print('Current price:', tr.get_current_price())
+
+    print('Reward:', tr.get_reward())
