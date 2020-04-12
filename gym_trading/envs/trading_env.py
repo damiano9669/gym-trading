@@ -8,7 +8,7 @@ from gym_trading.envs.trading_game import TradingGame
 class TradingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, n_samples=500, buy_fee=0.25, sell_fee=0.25):
+    def __init__(self, n_samples=1000, buy_fee=0.25, sell_fee=0.25):
         self.action_space = Discrete(3)
         self.tr_game = TradingGame(n_samples, buy_fee, sell_fee)
 
@@ -41,6 +41,7 @@ class TradingEnv(gym.Env):
 
     def render(self, mode='human', close=False):
         idx = self.tr_game.status
+
         plt.plot(self.tr_game.dates[:idx], self.tr_game.prices[:idx], label='Price')
 
         plt.scatter(self.tr_game.buy_actions['x'][:idx],
@@ -51,6 +52,16 @@ class TradingEnv(gym.Env):
                     self.tr_game.sell_actions['y'][:idx],
                     marker='v', c='r', label='SELL')
 
+        plt.tick_params(
+            axis='x',  # changes apply to the x-axis
+            which='both',  # both major and minor ticks are affected
+            bottom=False,  # ticks along the bottom edge are off
+            top=False,  # ticks along the top edge are off
+            labelbottom=False)  # labels along the bottom edge are off
+
+        plt.ylabel('USD/BTC')
+        plt.xlabel('Date')
+        plt.legend()
         plt.show()
 
     def get_total_reward(self):
