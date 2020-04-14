@@ -55,8 +55,9 @@ class TradingGame():
         min_nearest, max_nearest = get_nearest_minmax(self.status, self.min_relatives[0], self.max_relatives[0],
                                                       self.prices)
 
-        buying_distance = np.abs(self.status - min_nearest[0])
-        selling_distance = np.abs(self.status - max_nearest[0])
+        # closer the point, the higher the gain
+        buying_distance = 1 / (np.abs(self.status - min_nearest[0]) + 1e-8)
+        selling_distance = 1 / (np.abs(self.status - max_nearest[0]) + 1e-8)
         return buying_distance, selling_distance
 
     def get_percentage_profit(self):
