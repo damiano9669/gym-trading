@@ -1,17 +1,22 @@
 import my_utils.math.stats as st
+import numpy as np
 
-from gym_trading.envs.data_handler import load_data
+from gym_trading.envs.data_handler import get_min_max_relatives, get_nearest_minmax
+from gym_trading.envs.data_loader import load_data
 
 
 class TradingGame():
 
-    def __init__(self, n_samples, buy_fee=0.0, sell_fee=0.0):
+    def __init__(self, n_samples, buy_fee=0.0, sell_fee=0.0, order=5):
 
         self.buy_fee = buy_fee
         self.sell_fee = sell_fee
 
         # loading data
         self.dates, self.prices = load_data(n_samples)
+        # to compute the reward we'll use the min/max relative points
+        self.min_relatives, self.max_relatives = get_min_max_relatives(self.prices, order=order)
+
         # to store the points in which the agent decides to convert
         self.sell_actions = {'x': [], 'y': []}
         self.buy_actions = {'x': [], 'y': []}
@@ -32,6 +37,8 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount / self.prices[self.status], -self.buy_fee)
             self.currency = 'BTC'
+            return self.get_reward()[0]
+        return 0.0
 
     def sell(self):
         if self.currency == 'BTC':
@@ -41,8 +48,18 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount * self.prices[self.status], -self.sell_fee)
             self.currency = 'USD'
+            return self.get_reward()[1]
+        return 0.0
 
     def get_reward(self):
+        min_nearest, max_nearest = get_nearest_minmax(self.status, self.min_relatives[0], self.max_relatives[0],
+                                                      self.prices)
+
+        buying_distance = np.abs(self.status - min_nearest[0])
+        selling_distance = np.abs(self.status - max_nearest[0])
+        return buying_distance, selling_distance
+
+    def get_percentage_profit(self):
         if self.currency == 'USD':
             # to compute the difference of amount in percentage
             return self.amount / self.init_amount - 1
@@ -51,7 +68,7 @@ class TradingGame():
             return (self.amount * self.prices[self.status]) / self.init_amount - 1
 
     def get_current_price(self):
-        return self.prices[self.status]
+        return (self.dates[self.status], self.prices[self.status])
 
     def step(self):
         self.status += 1
@@ -90,4 +107,4 @@ if __name__ == '__main__':
     print('My wallet:', tr.amount, tr.currency)
     print('Current price:', tr.get_current_price())
 
-    print('Reward:', tr.get_reward())
+    print('Reward:', tr.get_percentage_profit())

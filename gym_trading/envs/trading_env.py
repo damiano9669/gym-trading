@@ -13,24 +13,19 @@ class TradingEnv(gym.Env):
         self.tr_game = TradingGame(n_samples, buy_fee, sell_fee)
 
     def step(self, action):
-        if action == 0:
-            # in this case we keep the current currency
-            pass
-        elif action == 1:
-            # in this case we BUY USD
-            self.tr_game.buy()
-        elif action == 2:
-            # in this case we SELL BTC
-            self.tr_game.sell()
 
         # updating the game
         done = self.tr_game.step()
 
-        # we return a reward only if we are selling or if we have finish
-        if action == 2 or done:
-            reward = self.tr_game.get_reward()
-        else:
+        if action == 0:
+            # in this case we keep the current currency
             reward = 0
+        elif action == 1:
+            # in this case we BUY USD
+            reward = self.tr_game.buy()
+        elif action == 2:
+            # in this case we SELL BTC
+            reward = self.tr_game.sell()
 
         # return observation, reward, done, infos
         return self.tr_game.get_current_price(), reward, done, None
@@ -67,4 +62,4 @@ class TradingEnv(gym.Env):
         plt.show()
 
     def get_total_reward(self):
-        return self.tr_game.get_reward()
+        return self.tr_game.get_percentage_profit()
