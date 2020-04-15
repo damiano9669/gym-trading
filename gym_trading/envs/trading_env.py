@@ -1,52 +1,70 @@
 import gym
 import matplotlib.pyplot as plt
+import numpy as np
 from gym.spaces import Discrete
 
+from gym_trading.envs.config import currencies
 from gym_trading.envs.trading_game import TradingGame
 
 
 class TradingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, n_samples=730, buy_fee=0.5, sell_fee=0.5):  # 2 years
+    def __init__(self, cripto_currency='BTC', mode_random=True, n_samples=10000, buy_fee=0.25, sell_fee=0.25):
+
+        self.mode_random = mode_random
         self.action_space = Discrete(3)
-        self.tr_game = TradingGame(n_samples, buy_fee, sell_fee)
+        self.tr_games = []
+
+        # if mode random is active we initialize every currency prices
+        if self.mode_random:
+            for cc in currencies.keys():
+                tr_game = TradingGame(cc, n_samples, buy_fee, sell_fee)
+                self.tr_games.append(tr_game)
+        else:
+            # otherwise only the cripto selected
+            tr_game = TradingGame(cripto_currency, n_samples, buy_fee, sell_fee)
+            self.tr_games.append(tr_game)
+
+        # index of the currency selected for the game
+        self.index = 0 if not mode_random else np.random.randint(0, len(currencies.keys()))
 
     def step(self, action):
 
         # updating the game
-        done = self.tr_game.step()
+        done = self.tr_games[self.index].step()
 
         if action == 0:
             # in this case we keep the current currency
             reward = 0
         elif action == 1:
             # in this case we BUY USD
-            reward = self.tr_game.buy()
+            reward = self.tr_games[self.index].buy()
         elif action == 2:
             # in this case we SELL BTC
-            reward = self.tr_game.sell()
+            reward = self.tr_games[self.index].sell()
 
         # return observation, reward, done, infos
-        return self.tr_game.get_current_price(), reward, done, None
+        return self.tr_games[self.index].get_current_price(), reward, done, None
 
     def reset(self):
-        self.tr_game.reset()
-        return self.tr_game.get_current_price()
+        self.index = 0 if not self.mode_random else np.random.randint(0, len(currencies.keys()))
+        self.tr_games[self.index].reset()
+        return self.tr_games[self.index].get_current_price()
 
     def render(self, mode='human', close=False):
-        idx = self.tr_game.status
+        idx = self.tr_games[self.index].status
 
         plt.clf()
 
-        plt.plot(self.tr_game.dates[:idx], self.tr_game.prices[:idx], label='Price')
+        plt.plot(self.tr_games[self.index].dates[:idx], self.tr_games[self.index].prices[:idx], label='Price')
 
-        plt.scatter(self.tr_game.buy_actions['x'][:idx],
-                    self.tr_game.buy_actions['y'][:idx],
+        plt.scatter(self.tr_games[self.index].buy_actions['x'][:idx],
+                    self.tr_games[self.index].buy_actions['y'][:idx],
                     marker='^', c='g', label='BUY')
 
-        plt.scatter(self.tr_game.sell_actions['x'][:idx],
-                    self.tr_game.sell_actions['y'][:idx],
+        plt.scatter(self.tr_games[self.index].sell_actions['x'][:idx],
+                    self.tr_games[self.index].sell_actions['y'][:idx],
                     marker='v', c='r', label='SELL')
 
         plt.tick_params(
@@ -56,10 +74,13 @@ class TradingEnv(gym.Env):
             top=False,  # ticks along the top edge are off
             labelbottom=False)  # labels along the bottom edge are off
 
-        plt.ylabel('USD/BTC')
+        plt.ylabel(f'USD/{self.get_current_cripto()}')
         plt.xlabel('Date')
         plt.legend()
         plt.show()
 
-    def get_total_reward(self):
-        return self.tr_game.get_percentage_profit()
+    def get_percentage_profit(self):
+        return self.tr_games[self.index].get_percentage_profit()
+
+    def get_current_cripto(self):
+        return self.tr_games[self.index].cripto_currency

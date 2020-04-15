@@ -7,13 +7,14 @@ from gym_trading.envs.data_loader import load_data
 
 class TradingGame():
 
-    def __init__(self, n_samples, buy_fee=0.0, sell_fee=0.0, order=5):
+    def __init__(self, cripto_currency='BTC', n_samples=10000, buy_fee=0.25, sell_fee=0.25, order=5):
 
+        self.cripto_currency = cripto_currency
         self.buy_fee = buy_fee
         self.sell_fee = sell_fee
 
         # loading data
-        self.dates, self.prices = load_data(n_samples)
+        self.dates, self.prices = load_data(currency=self.cripto_currency, n_samples=n_samples)
         # to compute the reward we'll use the min/max relative points
         self.min_relatives, self.max_relatives = get_min_max_relatives(self.prices, order=order)
 
@@ -36,12 +37,12 @@ class TradingGame():
             self.buy_actions['y'].append(self.prices[self.status])
             # updating amount
             self.amount = st.add_percentage(self.amount / self.prices[self.status], -self.buy_fee)
-            self.currency = 'BTC'
+            self.currency = self.cripto_currency
             return self.get_reward()[0]
         return 0.0
 
     def sell(self):
-        if self.currency == 'BTC':
+        if self.currency == self.cripto_currency:
             # saving action
             self.sell_actions['x'].append(self.dates[self.status])
             self.sell_actions['y'].append(self.prices[self.status])
@@ -90,7 +91,7 @@ class TradingGame():
 
 if __name__ == '__main__':
 
-    tr = TradingGame(100, 1, 1)
+    tr = TradingGame('NEO', 100, 1, 1)
 
     print('My wallet:', tr.amount, tr.currency)
     print('Current price:', tr.get_current_price())

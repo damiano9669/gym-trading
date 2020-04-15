@@ -35,7 +35,7 @@ def get_nearest_minmax(current_index, min_indices, max_indices, data):
 if __name__ == '__main__':
     dates, prices = load_data()
 
-    min_relatives, max_relatives = get_min_max_relatives(prices)
+    min_relatives, max_relatives = get_min_max_relatives(prices, 100)
 
     point = 500
     price_point = prices[point]
