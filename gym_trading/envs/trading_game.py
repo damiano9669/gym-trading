@@ -38,8 +38,7 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount / self.prices[self.status], -self.buy_fee)
             self.currency = self.cripto_currency
-            return self.get_reward()[0]
-        return 0.0
+        return self.get_reward()[0]
 
     def sell(self):
         if self.currency == self.cripto_currency:
@@ -49,17 +48,19 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount * self.prices[self.status], -self.sell_fee)
             self.currency = 'USD'
-            return self.get_reward()[1]
-        return 0.0
+        return self.get_reward()[1]
 
     def get_reward(self):
-        min_nearest, max_nearest = get_nearest_minmax(self.status, self.min_relatives[0], self.max_relatives[0],
+        min_nearest, max_nearest = get_nearest_minmax(self.status,
+                                                      self.min_relatives[0], self.max_relatives[0],
                                                       self.prices)
 
-        # closer the point, the higher the gain
-        buying_distance = 1 / (np.abs(self.status - min_nearest[0]) + 1.0)
-        selling_distance = 1 / (np.abs(self.status - max_nearest[0]) + 1.0)
-        return buying_distance, selling_distance
+        # if we are selling we return a positive reward only if the choice is more near to the local minimum
+        # otherwise viceversa
+        if np.abs(self.status - min_nearest[0]) < np.abs(self.status - max_nearest[0]):
+            return 1, -1  # buying reward, selling reward
+        else:
+            return -1, 1  # buying reward, selling reward
 
     def get_percentage_profit(self):
         if self.currency == 'USD':

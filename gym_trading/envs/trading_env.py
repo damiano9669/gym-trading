@@ -10,7 +10,8 @@ from gym_trading.envs.trading_game import TradingGame
 class TradingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, cripto_currency='BTC', mode_random=True, n_samples=10000, buy_fee=0.25, sell_fee=0.25, order=100):
+    def __init__(self, cripto_currency='BTC', mode_random=False, n_samples=10000, buy_fee=0.25, sell_fee=0.25,
+                 order=100):
 
         self.mode_random = mode_random
         self.action_space = Discrete(3)
@@ -65,6 +66,31 @@ class TradingEnv(gym.Env):
 
         plt.scatter(self.tr_games[self.index].sell_actions['x'][:idx],
                     self.tr_games[self.index].sell_actions['y'][:idx],
+                    marker='v', c='r', label='SELL')
+
+        plt.tick_params(
+            axis='x',  # changes apply to the x-axis
+            which='both',  # both major and minor ticks are affected
+            bottom=False,  # ticks along the bottom edge are off
+            top=False,  # ticks along the top edge are off
+            labelbottom=False)  # labels along the bottom edge are off
+
+        plt.ylabel(f'USD/{self.get_current_cripto()}')
+        plt.xlabel('Date')
+        plt.legend()
+        plt.show()
+
+    def render_optimal(self):
+        plt.clf()
+
+        plt.plot(self.tr_games[self.index].dates, self.tr_games[self.index].prices, label='Price')
+
+        plt.scatter(self.tr_games[self.index].min_relatives[0],
+                    self.tr_games[self.index].min_relatives[1],
+                    marker='^', c='g', label='BUY')
+
+        plt.scatter(self.tr_games[self.index].max_relatives[0],
+                    self.tr_games[self.index].max_relatives[1],
                     marker='v', c='r', label='SELL')
 
         plt.tick_params(
