@@ -10,7 +10,7 @@ from gym_trading.envs.trading_game import TradingGame
 class TradingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, cripto_currency='BTC', mode_random=True, n_samples=10000, buy_fee=0.25, sell_fee=0.25):
+    def __init__(self, cripto_currency='BTC', mode_random=True, n_samples=10000, buy_fee=0.25, sell_fee=0.25, order=100):
 
         self.mode_random = mode_random
         self.action_space = Discrete(3)
@@ -19,11 +19,11 @@ class TradingEnv(gym.Env):
         # if mode random is active we initialize every currency prices
         if self.mode_random:
             for cc in currencies.keys():
-                tr_game = TradingGame(cc, n_samples, buy_fee, sell_fee)
+                tr_game = TradingGame(cc, n_samples, buy_fee, sell_fee, order)
                 self.tr_games.append(tr_game)
         else:
             # otherwise only the cripto selected
-            tr_game = TradingGame(cripto_currency, n_samples, buy_fee, sell_fee)
+            tr_game = TradingGame(cripto_currency, n_samples, buy_fee, sell_fee, order)
             self.tr_games.append(tr_game)
 
         # index of the currency selected for the game

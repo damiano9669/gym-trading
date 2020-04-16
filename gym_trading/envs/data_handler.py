@@ -33,7 +33,7 @@ def get_nearest_minmax(current_index, min_indices, max_indices, data):
 
 
 if __name__ == '__main__':
-    dates, prices = load_data()
+    dates, prices = load_data('BTC', 1000)
 
     min_relatives, max_relatives = get_min_max_relatives(prices, 100)
 

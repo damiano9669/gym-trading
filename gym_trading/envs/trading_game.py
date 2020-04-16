@@ -7,7 +7,7 @@ from gym_trading.envs.data_loader import load_data
 
 class TradingGame():
 
-    def __init__(self, cripto_currency='BTC', n_samples=10000, buy_fee=0.25, sell_fee=0.25, order=5):
+    def __init__(self, cripto_currency='BTC', n_samples=10000, buy_fee=0.25, sell_fee=0.25, order=100):
 
         self.cripto_currency = cripto_currency
         self.buy_fee = buy_fee
