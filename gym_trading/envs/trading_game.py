@@ -57,8 +57,8 @@ class TradingGame():
                                                       self.prices)
 
         # closer the point, the higher the gain
-        buying_distance = 1 / (np.abs(self.status - min_nearest[0]) + 1e-8)
-        selling_distance = 1 / (np.abs(self.status - max_nearest[0]) + 1e-8)
+        buying_distance = 1 / (np.abs(self.status - min_nearest[0]) + 1.0)
+        selling_distance = 1 / (np.abs(self.status - max_nearest[0]) + 1.0)
         return buying_distance, selling_distance
 
     def get_percentage_profit(self):
