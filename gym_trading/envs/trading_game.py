@@ -12,11 +12,12 @@ class TradingGame():
         self.cripto_currency = cripto_currency
         self.buy_fee = buy_fee
         self.sell_fee = sell_fee
+        self.order = order
 
         # loading data
         self.dates, self.prices = load_data(currency=self.cripto_currency, n_samples=n_samples)
         # to compute the reward we'll use the min/max relative points
-        self.min_relatives, self.max_relatives = get_min_max_relatives(self.prices, order=order)
+        self.min_relatives, self.max_relatives = get_min_max_relatives(self.prices, order=self.order)
 
         # to store the points in which the agent decides to convert
         self.sell_actions = {'x': [], 'y': []}
@@ -89,25 +90,34 @@ class TradingGame():
         self.currency = 'USD'
         self.status = 0  # 0 <= status < len(dates)
 
+    def max_profit(self):
+        done = False
+        while not done:
+            if self.status in self.min_relatives[0]:
+                self.buy()
+            elif self.status in self.max_relatives[0]:
+                self.sell()
+
+            done = self.step()
+
+        profit = self.get_percentage_profit()
+        self.reset()
+        return profit
+
+    def get_summary(self):
+        summary = f'--------------------------------------------------------\n' \
+                  f'Cripto currency: {self.cripto_currency}\n' \
+                  f'Initial amount: {self.init_amount} {self.currency}\n' \
+                  f'Number of samples: {self.prices.shape[0]}\n' \
+                  f'Initial date: {self.dates[0]}\tLast date: {self.dates[-1]}\n' \
+                  f'Fees >> buy: -{self.buy_fee} %\tsell: -{self.sell_fee} %\n' \
+                  f'min/max relatives order: {self.order}\n' \
+                  f'Max profit (with this configurations): {self.max_profit()} %\n' \
+                  f'--------------------------------------------------------\n'
+        print(summary)
+
 
 if __name__ == '__main__':
+    tr = TradingGame('BTC', 10000, 0.25, 0.25, 20)
 
-    tr = TradingGame('NEO', 100, 1, 1)
-
-    print('My wallet:', tr.amount, tr.currency)
-    print('Current price:', tr.get_current_price())
-
-    print('BUY')
-    tr.buy()
-
-    done = False
-    while not done:
-        done = tr.step()
-
-    print('SELL')
-    tr.sell()
-
-    print('My wallet:', tr.amount, tr.currency)
-    print('Current price:', tr.get_current_price())
-
-    print('Reward:', tr.get_percentage_profit())
+    tr.get_summary()
