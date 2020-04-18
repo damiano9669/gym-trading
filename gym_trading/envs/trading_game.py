@@ -7,7 +7,7 @@ from gym_trading.envs.data_loader import load_data
 
 class TradingGame():
 
-    def __init__(self, cripto_currency='BTC', n_samples=10000, buy_fee=0.25, sell_fee=0.25, order=100):
+    def __init__(self, cripto_currency='BTC', n_samples=5000, buy_fee=0.25, sell_fee=0.25, order=100):
 
         self.cripto_currency = cripto_currency
         self.buy_fee = buy_fee
@@ -66,10 +66,10 @@ class TradingGame():
     def get_percentage_profit(self):
         if self.currency == 'USD':
             # to compute the difference of amount in percentage
-            return self.amount / self.init_amount - 1
+            return (self.amount / self.init_amount - 1) * 100
         else:
             # in this case, before to compute the percentage, we have to do a fake conversion in USD
-            return (self.amount * self.prices[self.status]) / self.init_amount - 1
+            return ((self.amount * self.prices[self.status]) / self.init_amount - 1) * 100
 
     def get_current_price(self):
         return (self.dates[self.status], self.prices[self.status])
@@ -108,16 +108,16 @@ class TradingGame():
         summary = f'--------------------------------------------------------\n' \
                   f'Cripto currency: {self.cripto_currency}\n' \
                   f'Initial amount: {self.init_amount} {self.currency}\n' \
-                  f'Number of samples: {self.prices.shape[0]}\n' \
+                  f'Number of samples: {self.prices.shape[0]} ({round(self.prices.shape[0] / 24)} trading days)\n' \
                   f'Initial date: {self.dates[0]}\tLast date: {self.dates[-1]}\n' \
                   f'Fees >> buy: -{self.buy_fee} %\tsell: -{self.sell_fee} %\n' \
-                  f'min/max relatives order: {self.order}\n' \
-                  f'Max profit (with this configurations): {self.max_profit()} %\n' \
+                  f'Min/max relatives order: {self.order}\n' \
+                  f'Max profit (with this configurations): {round(self.max_profit(), 2)} %\n' \
                   f'--------------------------------------------------------\n'
         print(summary)
 
 
 if __name__ == '__main__':
-    tr = TradingGame('BTC', 10000, 0.25, 0.25, 20)
+    tr = TradingGame('BTC', 5000, 0.25, 0.25, 100)
 
     tr.get_summary()

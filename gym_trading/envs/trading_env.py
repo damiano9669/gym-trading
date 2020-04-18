@@ -10,8 +10,11 @@ from gym_trading.envs.trading_game import TradingGame
 class TradingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, cripto_currency='BTC', mode_random=False, n_samples=5000, buy_fee=0.25, sell_fee=0.25,
-                 order=5):
+    def __init__(self,
+                 cripto_currency='BTC', mode_random=False,
+                 n_samples=5000,
+                 buy_fee=0.25, sell_fee=0.25,
+                 order=100):
 
         self.mode_random = mode_random
         self.action_space = Discrete(3)
@@ -53,7 +56,7 @@ class TradingEnv(gym.Env):
             reward = self.tr_games[self.index].sell()
 
         # return observation, reward, done, infos
-        return self.tr_games[self.index].get_current_price(), reward, done, None
+        return self.tr_games[self.index].get_current_price(), reward, done, {}
 
     def reset(self):
         self.index = 0 if not self.mode_random else np.random.randint(0, len(currencies.keys()))
