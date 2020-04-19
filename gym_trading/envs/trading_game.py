@@ -1,7 +1,6 @@
 import my_utils.math.stats as st
-import numpy as np
 
-from gym_trading.envs.data_handler import get_min_max_relatives, get_nearest_minmax
+from gym_trading.envs.data_handler import get_min_max_relatives
 from gym_trading.envs.data_loader import load_data
 
 
@@ -39,7 +38,6 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount / self.prices[self.status], -self.buy_fee)
             self.currency = self.cripto_currency
-        return self.get_reward()[0]
 
     def sell(self):
         if self.currency == self.cripto_currency:
@@ -49,19 +47,14 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount * self.prices[self.status], -self.sell_fee)
             self.currency = 'USD'
-        return self.get_reward()[1]
 
-    def get_reward(self):
-        min_nearest, max_nearest = get_nearest_minmax(self.status,
-                                                      self.min_relatives[0], self.max_relatives[0],
-                                                      self.prices)
-
-        # if we are selling we return a positive reward only if the choice is more near to the local minimum
-        # otherwise viceversa
-        if np.abs(self.status - min_nearest[0]) < np.abs(self.status - max_nearest[0]):
-            return 1, -1  # buying reward, selling reward
+    def get_point_type(self):
+        if self.status in self.min_relatives[0]:
+            return 'BUY'
+        elif self.status in self.max_relatives[0]:
+            return 'SELL'
         else:
-            return -1, 1  # buying reward, selling reward
+            return 'HOLD'
 
     def get_percentage_profit(self):
         if self.currency == 'USD':

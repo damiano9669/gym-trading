@@ -45,15 +45,18 @@ class TradingEnv(gym.Env):
         # updating the game
         done = self.tr_games[self.index].step()
 
-        if action == 0:
-            # in this case we keep the current currency
-            reward = 0
+        point_type = self.tr_games[self.index].get_point_type()
+
+        if action == 0:  # HOLD
+            reward = 1 if point_type == 'HOLD' else -1
         elif action == 1:
-            # in this case we BUY USD
-            reward = self.tr_games[self.index].buy()
+            # in this case we BUY BTC
+            reward = 1 if point_type == 'BUY' else -1
+            self.tr_games[self.index].buy()
         elif action == 2:
             # in this case we SELL BTC
-            reward = self.tr_games[self.index].sell()
+            reward = 1 if point_type == 'SELL' else -1
+            self.tr_games[self.index].sell()
 
         # return observation, reward, done, infos
         return self.tr_games[self.index].get_current_price(), reward, done, {}
