@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import my_utils.math.stats as st
 
 from gym_trading.envs.data_handler import get_min_max_relatives
@@ -38,6 +39,8 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount / self.prices[self.status], -self.buy_fee)
             self.currency = self.cripto_currency
+            return True
+        return False
 
     def sell(self):
         if self.currency == self.cripto_currency:
@@ -47,16 +50,10 @@ class TradingGame():
             # updating amount
             self.amount = st.add_percentage(self.amount * self.prices[self.status], -self.sell_fee)
             self.currency = 'USD'
+            return True
+        return False
 
-    def get_point_type(self):
-        if self.status in self.min_relatives[0]:
-            return 'BUY'
-        elif self.status in self.max_relatives[0]:
-            return 'SELL'
-        else:
-            return 'HOLD'
-
-    def get_percentage_profit(self):
+    def get_profit(self):
         if self.currency == 'USD':
             # to compute the difference of amount in percentage
             return (self.amount / self.init_amount - 1) * 100
@@ -83,7 +80,7 @@ class TradingGame():
         self.currency = 'USD'
         self.status = 0  # 0 <= status < len(dates)
 
-    def max_profit(self):
+    def run_optimal_game(self):
         done = False
         while not done:
             if self.status in self.min_relatives[0]:
@@ -93,7 +90,9 @@ class TradingGame():
 
             done = self.step()
 
-        profit = self.get_percentage_profit()
+    def max_profit(self):
+        self.run_optimal_game()
+        profit = self.get_profit()
         self.reset()
         return profit
 
@@ -109,8 +108,40 @@ class TradingGame():
                   f'--------------------------------------------------------\n'
         print(summary)
 
+    def plot(self):
+        plt.clf()
+
+        plt.plot(self.dates, self.prices, label='Price')
+
+        plt.scatter(self.buy_actions['x'],
+                    self.buy_actions['y'],
+                    marker='^', c='g', label='BUY')
+
+        plt.scatter(self.sell_actions['x'],
+                    self.sell_actions['y'],
+                    marker='v', c='r', label='SELL')
+
+        plt.tick_params(
+            axis='x',  # changes apply to the x-axis
+            which='both',  # both major and minor ticks are affected
+            bottom=False,  # ticks along the bottom edge are off
+            top=False,  # ticks along the top edge are off
+            labelbottom=False)  # labels along the bottom edge are off
+
+        plt.ylabel(f'USD/{self.cripto_currency}')
+        plt.xlabel('Date')
+        plt.legend()
+        plt.show()
+
+    def plot_optimal(self):
+        self.run_optimal_game()
+        self.plot()
+        self.reset()
+
 
 if __name__ == '__main__':
-    tr = TradingGame('BTC', 5000, 0.25, 0.25, 100)
+    tr = TradingGame()
 
     tr.get_summary()
+
+    tr.plot_optimal()
