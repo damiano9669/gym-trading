@@ -7,7 +7,7 @@ from gym_trading.envs.Trader import Trader
 
 class TradingGame(Trader):
 
-    def __init__(self, fee=0.25):
+    def __init__(self, n_samples=None, fee=0.25):
         super().__init__(init_amount=1000.0,
                          init_currency='USD',
                          current_amount=1000.0,
@@ -17,6 +17,9 @@ class TradingGame(Trader):
                          sell_fee=fee)
 
         self.data = DataLoader(url).data
+        if n_samples != None:
+            self.data['dates'] = self.data['dates'][-n_samples:]
+            self.data['prices'] = self.data['prices'][-n_samples:]
         self.current_day_index = 0
 
         self.buy_actions = {'dates': [], 'prices': []}
@@ -61,6 +64,8 @@ class TradingGame(Trader):
         plt.scatter(self.sell_actions['dates'],
                     self.sell_actions['prices'],
                     marker='v', c='r', label='SELL')
+
+        plt.xticks(rotation=90)
 
         plt.ylabel(f'USD/{self.crypto_currency}')
         plt.xlabel('Date')

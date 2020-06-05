@@ -6,7 +6,8 @@ from gym_trading.envs.TradingGame import TradingGame
 
 class TradingEnv(gym.Env):
 
-    def __init__(self, fee=0.25):
+    def __init__(self, n_samples=None, fee=0.25):
+        self.n_samples = n_samples
         self.fee = fee
         self.action_space = Discrete(2)  # BUY, SELL
         self.trader = None
@@ -25,7 +26,7 @@ class TradingEnv(gym.Env):
         return observation['price'], reward, done, {}
 
     def reset(self):
-        self.trader = TradingGame(fee=self.fee)
+        self.trader = TradingGame(n_samples=self.n_samples, fee=self.fee)
         return self.trader.get_data_now()['price']
 
     def render(self):
