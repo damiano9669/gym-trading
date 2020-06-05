@@ -19,8 +19,9 @@ class TradingEnv(gym.Env):
         if action == 0:
             self.trader.buy()
         elif action == 1:
-            self.trader.sell()
-            reward = self.trader.get_profit()
+            performed = self.trader.sell()
+            if performed:
+                reward = self.trader.get_profit()
 
         observation, done = self.trader.step()
         return observation['price'], reward, done, {}
