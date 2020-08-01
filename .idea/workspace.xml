@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="backup">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gym-trading.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/example.ipynb" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="JupyterTrust" id="871bc372-93f9-44ec-a9fe-37a3d3d74213" />
+  <component name="ProjectId" id="1aQrt9m5c5q8UhBfSSrNOCcOiUD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/gym_trading/envs" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gym_trading/envs" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.TradingGame">
+    <configuration name="TradingGame" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gym-trading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_handler" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gym-trading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/data_handler.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_loader" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gym-trading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/data_loader.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gym-trading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="trading_game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gym-trading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/trading_game.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.TradingGame" />
+        <item itemvalue="Python.trading_game" />
+        <item itemvalue="Python.data_handler" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.data_loader" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="" />
+      <created>1586678870834</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586678870834</updated>
+      <workItem from="1586678872173" duration="20000" />
+      <workItem from="1586680991869" duration="268000" />
+      <workItem from="1586683725881" duration="1863000" />
+      <workItem from="1586712052104" duration="4307000" />
+      <workItem from="1586758338955" duration="28000" />
+      <workItem from="1586859972263" duration="3340000" />
+      <workItem from="1586864539221" duration="315000" />
+      <workItem from="1586869968566" duration="101000" />
+      <workItem from="1586874970823" duration="371000" />
+      <workItem from="1586932996288" duration="11000" />
+      <workItem from="1586961542915" duration="3124000" />
+      <workItem from="1587024717755" duration="135000" />
+      <workItem from="1587044084310" duration="312000" />
+      <workItem from="1587054272962" duration="2535000" />
+      <workItem from="1587136157376" duration="2350000" />
+      <workItem from="1587237356825" duration="767000" />
+      <workItem from="1587299181303" duration="1186000" />
+      <workItem from="1587367785029" duration="2668000" />
+      <workItem from="1587409822000" duration="36000" />
+      <workItem from="1591275193732" duration="678000" />
+      <workItem from="1591279035913" duration="6000" />
+      <workItem from="1591297495141" duration="5249000" />
+      <workItem from="1591354186919" duration="532000" />
+      <workItem from="1591360908115" duration="131000" />
+      <workItem from="1596269186277" duration="783000" />
+    </task>
+    <task id="LOCAL-00001" summary="download data from url">
+      <created>1586681240610</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586681240610</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chart improvements">
+      <created>1586684977748</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586684977748</updated>
+    </task>
+    <task id="LOCAL-00003" summary="bug fixed">
+      <created>1586714826853</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586714826853</updated>
+    </task>
+    <task id="LOCAL-00004" summary="new reward function">
+      <created>1586864335965</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1586864335965</updated>
+    </task>
+    <task id="LOCAL-00005" summary="new new reward function">
+      <created>1586864822795</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1586864822795</updated>
+    </task>
+    <task id="LOCAL-00006" summary="criptos added">
+      <created>1586964647867</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586964647867</updated>
+    </task>
+    <task id="LOCAL-00007" summary="new reward">
+      <created>1587024828523</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587024828523</updated>
+    </task>
+    <task id="LOCAL-00008" summary="new order">
+      <created>1587044376996</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587044376996</updated>
+    </task>
+    <task id="LOCAL-00009" summary="new new reward function">
+      <created>1587056788561</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587056788561</updated>
+    </task>
+    <task id="LOCAL-00010" summary="max profit computation">
+      <created>1587138485602</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587138485603</updated>
+    </task>
+    <task id="LOCAL-00011" summary="profit percentage">
+      <created>1587238015867</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587238015867</updated>
+    </task>
+    <task id="LOCAL-00012" summary="example">
+      <created>1587238086813</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1587238086813</updated>
+    </task>
+    <task id="LOCAL-00013" summary="new reward function">
+      <created>1587300347754</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1587300347754</updated>
+    </task>
+    <task id="LOCAL-00014" summary="hold action removed">
+      <created>1587370427570</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1587370427570</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Radical changes.">
+      <created>1591304506541</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1591304506541</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Number of samples customizable.">
+      <created>1591354692736</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1591354692736</updated>
+    </task>
+    <task id="LOCAL-00017" summary="backup">
+      <created>1591361020084</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1591361020084</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="download data from url" />
+    <MESSAGE value="chart improvements" />
+    <MESSAGE value="bug fixed" />
+    <MESSAGE value="criptos added" />
+    <MESSAGE value="new reward" />
+    <MESSAGE value="new order" />
+    <MESSAGE value="new new reward function" />
+    <MESSAGE value="max profit computation" />
+    <MESSAGE value="profit percentage" />
+    <MESSAGE value="example" />
+    <MESSAGE value="new reward function" />
+    <MESSAGE value="hold action removed" />
+    <MESSAGE value="Radical changes." />
+    <MESSAGE value="Number of samples customizable." />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1591354583207">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/46.27.1320.741@46.27.1320.741" timestamp="1591354583207" />
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1596269958257">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1596269958257" />
+    <state width="1274" height="135" key="GridCell.Tab.0.bottom" timestamp="1591354718063">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state width="1274" height="135" key="GridCell.Tab.0.bottom/46.27.1320.741@46.27.1320.741" timestamp="1591354718063" />
+    <state width="1274" height="135" key="GridCell.Tab.0.center" timestamp="1591354718063">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state width="1274" height="135" key="GridCell.Tab.0.center/46.27.1320.741@46.27.1320.741" timestamp="1591354718063" />
+    <state width="1274" height="135" key="GridCell.Tab.0.left" timestamp="1591354718062">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state width="1274" height="135" key="GridCell.Tab.0.left/46.27.1320.741@46.27.1320.741" timestamp="1591354718062" />
+    <state width="1274" height="135" key="GridCell.Tab.0.right" timestamp="1591354718063">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state width="1274" height="135" key="GridCell.Tab.0.right/46.27.1320.741@46.27.1320.741" timestamp="1591354718063" />
+    <state x="196" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1596269223639">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state x="196" y="31" width="1022" height="737" key="SettingsEditor/46.27.1320.741@46.27.1320.741" timestamp="1596269223639" />
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1591361028464">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1591361028464" />
+    <state x="369" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1591302028793">
+      <screen x="46" y="27" width="1320" height="741" />
+    </state>
+    <state x="369" y="89" width="672" height="678" key="search.everywhere.popup/46.27.1320.741@46.27.1320.741" timestamp="1591302028793" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/gym_trading$trading_env.coverage" NAME="trading_env Coverage Results" MODIFIED="1586875225759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$TradingGame.coverage" NAME="TradingGame Coverage Results" MODIFIED="1591354526554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$data_handler.coverage" NAME="data_handler Coverage Results" MODIFIED="1587044262200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1586963385215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$chart_handler.coverage" NAME="chart_handler Coverage Results" MODIFIED="1586863592287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$test.coverage" NAME="test Coverage Results" MODIFIED="1586963915495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$trading_game.coverage" NAME="trading_game Coverage Results" MODIFIED="1587368547779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+  </component>
+</project>
