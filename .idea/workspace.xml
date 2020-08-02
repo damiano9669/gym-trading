@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="backup">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gym-trading.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/example.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +200,8 @@
       <workItem from="1591297495141" duration="5249000" />
       <workItem from="1591354186919" duration="532000" />
       <workItem from="1591360908115" duration="131000" />
-      <workItem from="1596269186277" duration="783000" />
+      <workItem from="1596269186277" duration="858000" />
+      <workItem from="1596362697108" duration="1508000" />
     </task>
     <task id="LOCAL-00001" summary="download data from url">
       <created>1586681240610</created>
@@ -323,7 +322,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591361020084</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="backup">
+      <created>1596270001611</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1596270001611</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,10 +358,10 @@
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/46.27.1320.741@46.27.1320.741" timestamp="1591354583207" />
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1596269958257">
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1596270001345">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1596269958257" />
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1596270001345" />
     <state width="1274" height="135" key="GridCell.Tab.0.bottom" timestamp="1591354718063">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
@@ -376,10 +382,10 @@
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor/46.27.1320.741@46.27.1320.741" timestamp="1596269223639" />
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1591361028464">
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1596270009335">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1591361028464" />
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1596270009335" />
     <state x="369" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1591302028793">
       <screen x="46" y="27" width="1320" height="741" />
     </state>

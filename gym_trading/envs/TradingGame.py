@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import my_utils.math.stats as st
 
 from gym_trading.envs.Config import url
 from gym_trading.envs.DataLoader import DataLoader
@@ -49,6 +50,17 @@ class TradingGame(Trader):
     def get_profit(self):
         data_now = self.get_data_now()
         return super(TradingGame, self).get_profit(data_now['price'])
+
+    def get_AAV(self):
+        N = len(self.buy_actions['dates']) + len(self.sell_actions['dates'])
+        aav = 0
+        for price_b, price_s in zip(self.buy_actions['prices'],
+                                    self.sell_actions['prices'] if N % 2 == 0 else self.sell_actions['prices'][:-1]):
+            aav += st.add_percentage(price_s, -self.sell_fee) - st.add_percentage(price_b, self.buy_fee)
+        N = N if N % 2 == 0 else N - 1
+        if N == 0:
+            return 0
+        return aav / N
 
     def get_data_now(self):
         return {'date': self.data['dates'][self.current_day_index],

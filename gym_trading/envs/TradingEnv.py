@@ -14,17 +14,14 @@ class TradingEnv(gym.Env):
         self.reset()  # to initialize the trader
 
     def step(self, action):
-        reward = 0
 
         if action == 0:
             self.trader.buy()
         elif action == 1:
-            performed = self.trader.sell()
-            if performed:
-                reward = self.trader.get_profit()
+            self.trader.sell()
 
         observation, done = self.trader.step()
-        return observation['price'], reward, done, {}
+        return observation['price'], self.trader.get_AAV(), done, {}
 
     def reset(self):
         self.trader = TradingGame(n_samples=self.n_samples, fee=self.fee)
