@@ -1,7 +1,7 @@
 import my_utils.math.stats as st
 
 
-class Trader():
+class Trader:
 
     def __init__(self,
                  init_amount=1000.0,

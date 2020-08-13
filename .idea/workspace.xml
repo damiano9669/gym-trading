@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/example.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_trading/envs/Trader.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/Trader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
@@ -202,7 +201,8 @@
       <workItem from="1596269186277" duration="858000" />
       <workItem from="1596362697108" duration="1577000" />
       <workItem from="1596364544037" duration="1132000" />
-      <workItem from="1597332098566" duration="2434000" />
+      <workItem from="1597332098566" duration="2631000" />
+      <workItem from="1597347019050" duration="809000" />
     </task>
     <task id="LOCAL-00001" summary="download data from url">
       <created>1586681240610</created>
@@ -344,7 +344,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596364256443</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="stack prices">
+      <created>1597334545521</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1597334545521</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -367,41 +374,42 @@
     <MESSAGE value="Number of samples customizable." />
     <MESSAGE value="aav return function" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="stack prices" />
+    <option name="LAST_COMMIT_MESSAGE" value="stack prices" />
   </component>
   <component name="WindowStateProjectService">
     <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1591354583207">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/46.27.1320.741@46.27.1320.741" timestamp="1591354583207" />
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1596364256294">
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1597334545344">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1596364256294" />
-    <state width="1274" height="223" key="GridCell.Tab.0.bottom" timestamp="1597334531047">
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1597334545344" />
+    <state width="1274" height="98" key="GridCell.Tab.0.bottom" timestamp="1597334729796">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="223" key="GridCell.Tab.0.bottom/46.27.1320.741@46.27.1320.741" timestamp="1597334531047" />
-    <state width="1274" height="223" key="GridCell.Tab.0.center" timestamp="1597334531047">
+    <state width="1274" height="98" key="GridCell.Tab.0.bottom/46.27.1320.741@46.27.1320.741" timestamp="1597334729796" />
+    <state width="1274" height="98" key="GridCell.Tab.0.center" timestamp="1597334729794">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="223" key="GridCell.Tab.0.center/46.27.1320.741@46.27.1320.741" timestamp="1597334531047" />
-    <state width="1274" height="223" key="GridCell.Tab.0.left" timestamp="1597334531046">
+    <state width="1274" height="98" key="GridCell.Tab.0.center/46.27.1320.741@46.27.1320.741" timestamp="1597334729794" />
+    <state width="1274" height="98" key="GridCell.Tab.0.left" timestamp="1597334729792">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="223" key="GridCell.Tab.0.left/46.27.1320.741@46.27.1320.741" timestamp="1597334531046" />
-    <state width="1274" height="223" key="GridCell.Tab.0.right" timestamp="1597334531047">
+    <state width="1274" height="98" key="GridCell.Tab.0.left/46.27.1320.741@46.27.1320.741" timestamp="1597334729792" />
+    <state width="1274" height="98" key="GridCell.Tab.0.right" timestamp="1597334729795">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="223" key="GridCell.Tab.0.right/46.27.1320.741@46.27.1320.741" timestamp="1597334531047" />
+    <state width="1274" height="98" key="GridCell.Tab.0.right/46.27.1320.741@46.27.1320.741" timestamp="1597334729795" />
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1596269223639">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor/46.27.1320.741@46.27.1320.741" timestamp="1596269223639" />
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1596364262951">
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1597334551261">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1596364262951" />
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1597334551261" />
     <state x="369" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1591302028793">
       <screen x="46" y="27" width="1320" height="741" />
     </state>

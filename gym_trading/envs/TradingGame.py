@@ -35,6 +35,9 @@ class TradingGame(Trader):
         self.buy_actions = {'dates': [], 'prices': []}
         self.sell_actions = {'dates': [], 'prices': []}
 
+        self.incremental_AAV = 0
+        self.N = 0  # number of buy-sell pairs
+
     def step(self):
         """
             To perform a step:
@@ -76,22 +79,22 @@ class TradingGame(Trader):
         data_now = self.get_data_now()
         self.sell_actions['dates'].append(data_now['date'])
         self.sell_actions['prices'].append(data_now['price'])
-        return super(TradingGame, self).sell(data_now['price'])
+        performed = super(TradingGame, self).sell(data_now['price'])
+        if performed:
+            self.N += 1  # updating the number of pairs
+            x_k = st.add_percentage(self.sell_actions['prices'][-1],
+                                    -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1],
+                                                                        self.buy_fee)
+            # incremental mean formula
+            self.incremental_AAV += (x_k - self.incremental_AAV) / self.N
+        return performed
 
     def get_profit(self):
         data_now = self.get_data_now()
         return super(TradingGame, self).get_profit(data_now['price'])
 
     def get_AAV(self):
-        N = len(self.buy_actions['dates']) + len(self.sell_actions['dates'])
-        aav = 0
-        for price_b, price_s in zip(self.buy_actions['prices'],
-                                    self.sell_actions['prices'] if N % 2 == 0 else self.sell_actions['prices'][:-1]):
-            aav += st.add_percentage(price_s, -self.sell_fee) - st.add_percentage(price_b, self.buy_fee)
-        N = N if N % 2 == 0 else N - 1
-        if N == 0:
-            return 0
-        return aav / N
+        return self.incremental_AAV
 
     def get_data_now(self):
         return {'date': self.data['dates'][self.current_day_index],
