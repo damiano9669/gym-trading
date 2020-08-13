@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/example.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" afterDir="false" />
@@ -44,7 +43,7 @@
       <recent name="$PROJECT_DIR$/gym_trading/envs" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.TradingGame">
+  <component name="RunManager" selected="Python.example">
     <configuration name="TradingGame" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gym-trading" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -89,7 +88,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="data_loader" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gym-trading" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -97,12 +96,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/data_loader.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -157,11 +156,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.example" />
         <item itemvalue="Python.TradingGame" />
         <item itemvalue="Python.trading_game" />
         <item itemvalue="Python.data_handler" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.data_loader" />
       </list>
     </recent_temporary>
   </component>
@@ -201,7 +200,9 @@
       <workItem from="1591354186919" duration="532000" />
       <workItem from="1591360908115" duration="131000" />
       <workItem from="1596269186277" duration="858000" />
-      <workItem from="1596362697108" duration="1508000" />
+      <workItem from="1596362697108" duration="1577000" />
+      <workItem from="1596364544037" duration="1132000" />
+      <workItem from="1597332098566" duration="2434000" />
     </task>
     <task id="LOCAL-00001" summary="download data from url">
       <created>1586681240610</created>
@@ -329,7 +330,21 @@
       <option name="project" value="LOCAL" />
       <updated>1596270001611</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="aav return function">
+      <created>1596364220692</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1596364220692</updated>
+    </task>
+    <task id="LOCAL-00020" summary="backup">
+      <created>1596364256443</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1596364256443</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -350,6 +365,7 @@
     <MESSAGE value="hold action removed" />
     <MESSAGE value="Radical changes." />
     <MESSAGE value="Number of samples customizable." />
+    <MESSAGE value="aav return function" />
     <MESSAGE value="backup" />
     <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
@@ -358,34 +374,34 @@
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/46.27.1320.741@46.27.1320.741" timestamp="1591354583207" />
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1596270001345">
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1596364256294">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1596270001345" />
-    <state width="1274" height="135" key="GridCell.Tab.0.bottom" timestamp="1591354718063">
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1596364256294" />
+    <state width="1274" height="223" key="GridCell.Tab.0.bottom" timestamp="1597334531047">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="135" key="GridCell.Tab.0.bottom/46.27.1320.741@46.27.1320.741" timestamp="1591354718063" />
-    <state width="1274" height="135" key="GridCell.Tab.0.center" timestamp="1591354718063">
+    <state width="1274" height="223" key="GridCell.Tab.0.bottom/46.27.1320.741@46.27.1320.741" timestamp="1597334531047" />
+    <state width="1274" height="223" key="GridCell.Tab.0.center" timestamp="1597334531047">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="135" key="GridCell.Tab.0.center/46.27.1320.741@46.27.1320.741" timestamp="1591354718063" />
-    <state width="1274" height="135" key="GridCell.Tab.0.left" timestamp="1591354718062">
+    <state width="1274" height="223" key="GridCell.Tab.0.center/46.27.1320.741@46.27.1320.741" timestamp="1597334531047" />
+    <state width="1274" height="223" key="GridCell.Tab.0.left" timestamp="1597334531046">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="135" key="GridCell.Tab.0.left/46.27.1320.741@46.27.1320.741" timestamp="1591354718062" />
-    <state width="1274" height="135" key="GridCell.Tab.0.right" timestamp="1591354718063">
+    <state width="1274" height="223" key="GridCell.Tab.0.left/46.27.1320.741@46.27.1320.741" timestamp="1597334531046" />
+    <state width="1274" height="223" key="GridCell.Tab.0.right" timestamp="1597334531047">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state width="1274" height="135" key="GridCell.Tab.0.right/46.27.1320.741@46.27.1320.741" timestamp="1591354718063" />
+    <state width="1274" height="223" key="GridCell.Tab.0.right/46.27.1320.741@46.27.1320.741" timestamp="1597334531047" />
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1596269223639">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor/46.27.1320.741@46.27.1320.741" timestamp="1596269223639" />
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1596270009335">
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1596364262951">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1596270009335" />
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1596364262951" />
     <state x="369" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1591302028793">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
@@ -394,6 +410,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/gym_trading$trading_env.coverage" NAME="trading_env Coverage Results" MODIFIED="1586875225759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$TradingGame.coverage" NAME="TradingGame Coverage Results" MODIFIED="1591354526554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$example.coverage" NAME="example Coverage Results" MODIFIED="1597334369750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/gym_trading$data_handler.coverage" NAME="data_handler Coverage Results" MODIFIED="1587044262200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1586963385215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$chart_handler.coverage" NAME="chart_handler Coverage Results" MODIFIED="1586863592287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />

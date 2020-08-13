@@ -8,7 +8,13 @@ from gym_trading.envs.Trader import Trader
 
 class TradingGame(Trader):
 
-    def __init__(self, n_samples=None, fee=0.25):
+    def __init__(self, n_samples=None, stack_size=1, fee=0.25):
+        """
+
+        :param n_samples: number of samples to load from the database
+        :param stack_size: size of the observations
+        :param fee:
+        """
         super().__init__(init_amount=1000.0,
                          init_currency='USD',
                          current_amount=1000.0,
@@ -18,22 +24,47 @@ class TradingGame(Trader):
                          sell_fee=fee)
 
         self.data = DataLoader(url).data
-        if n_samples != None:
+        if n_samples is not None:
             self.data['dates'] = self.data['dates'][-n_samples:]
             self.data['prices'] = self.data['prices'][-n_samples:]
+
+        self.stack_size = stack_size
+        self.stack = []
         self.current_day_index = 0
 
         self.buy_actions = {'dates': [], 'prices': []}
         self.sell_actions = {'dates': [], 'prices': []}
 
     def step(self):
+        """
+            To perform a step:
+                - updating current day;
+                - checking if this is the last day;
+        :return:
+        """
         done = False
         self.current_day_index += 1
         if self.current_day_index >= len(self.data['dates']):
             self.current_day_index -= 1
             done = True
         data = self.get_data_now()
-        return data, done
+
+        # adding element to the lsit
+        self.stack.append(data)
+        # checking if the list exceeds the maximum number
+        if len(self.stack) > self.stack_size:
+            self.stack.pop(0)
+
+        # if we have done we return the stack, also in case of non-full stack
+        if done:
+            return self.stack, done
+        else:
+            # otherwise we call a recursion until stack is full
+            if len(self.stack) < self.stack_size:
+                return self.step()
+            else:
+                # in case of normal situations, we return the updated stack
+                return self.stack, done
 
     def buy(self):
         data_now = self.get_data_now()
