@@ -71,16 +71,19 @@ class TradingGame(Trader):
 
     def buy(self):
         data_now = self.get_data_now()
-        self.buy_actions['dates'].append(data_now['date'])
-        self.buy_actions['prices'].append(data_now['price'])
-        return super(TradingGame, self).buy(data_now['price'])
+        performed = super(TradingGame, self).buy(data_now['price'])
+        if performed:
+            self.buy_actions['dates'].append(data_now['date'])
+            self.buy_actions['prices'].append(data_now['price'])
 
     def sell(self):
         data_now = self.get_data_now()
-        self.sell_actions['dates'].append(data_now['date'])
-        self.sell_actions['prices'].append(data_now['price'])
         performed = super(TradingGame, self).sell(data_now['price'])
         if performed:
+            self.sell_actions['dates'].append(data_now['date'])
+            self.sell_actions['prices'].append(data_now['price'])
+
+            # for the incremental AAV
             self.N += 1  # updating the number of pairs
             x_k = st.add_percentage(self.sell_actions['prices'][-1],
                                     -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1],

@@ -10,6 +10,7 @@ class TradingEnv(gym.Env):
         self.n_samples = n_samples
         self.stack_size = stack_size
         self.fee = fee
+        self.observation_space = (stack_size,)
         self.action_space = Discrete(2)  # BUY, SELL
         self.trader = None
         self.reset()  # to initialize the trader

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_trading/envs/Trader.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/Trader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-    </list>
+    <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -202,7 +197,7 @@
       <workItem from="1596362697108" duration="1577000" />
       <workItem from="1596364544037" duration="1132000" />
       <workItem from="1597332098566" duration="2631000" />
-      <workItem from="1597347019050" duration="809000" />
+      <workItem from="1597347019050" duration="947000" />
     </task>
     <task id="LOCAL-00001" summary="download data from url">
       <created>1586681240610</created>
@@ -351,7 +346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597334545521</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Incremental AAV">
+      <created>1597347928802</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1597347928802</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,17 +377,18 @@
     <MESSAGE value="aav return function" />
     <MESSAGE value="backup" />
     <MESSAGE value="stack prices" />
-    <option name="LAST_COMMIT_MESSAGE" value="stack prices" />
+    <MESSAGE value="Incremental AAV" />
+    <option name="LAST_COMMIT_MESSAGE" value="Incremental AAV" />
   </component>
   <component name="WindowStateProjectService">
     <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1591354583207">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/46.27.1320.741@46.27.1320.741" timestamp="1591354583207" />
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1597334545344">
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2" timestamp="1597347928624">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1597334545344" />
+    <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1597347928624" />
     <state width="1274" height="98" key="GridCell.Tab.0.bottom" timestamp="1597334729796">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
@@ -406,10 +409,10 @@
       <screen x="46" y="27" width="1320" height="741" />
     </state>
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor/46.27.1320.741@46.27.1320.741" timestamp="1596269223639" />
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1597334551261">
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1597347933111">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
-    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1597334551261" />
+    <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1597347933111" />
     <state x="369" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1591302028793">
       <screen x="46" y="27" width="1320" height="741" />
     </state>
