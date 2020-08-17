@@ -116,7 +116,7 @@ class TradingGame(Trader):
                 'price': self.data['prices'][self.current_day_index]}
 
     def plot_chart(self):
-        plt.title(f'Total profit: {round(self.get_profit(), 3)} %')
+        plt.title(f'Total profit: {round(self.get_profit(), 3)} % (fee: {self.buy_fee} %)')
 
         plt.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
 
@@ -138,9 +138,10 @@ class TradingGame(Trader):
         initial_date = self.data['dates'][0]
         final_date = self.data['dates'][-1]
 
-        plt.figtext(0.001,
-                    0.001,
+        plt.figtext(0.01,
+                    0.01,
                     f'Sampling interval: {round(interval.total_seconds() / 60)} minutes\n'
+                    f'Total number of days: {round((((final_date - initial_date).total_seconds() / 60) / 60) / 24)}\n'
                     f'Initial date: {initial_date} - Final date: {final_date}',
                     fontsize=10,
                     verticalalignment='bottom')
