@@ -9,7 +9,7 @@ import requests
 from gym_trading.envs.Config import file_csv
 
 
-class DataLoader():
+class DataLoader:
 
     def __init__(self, url):
         self.url = url

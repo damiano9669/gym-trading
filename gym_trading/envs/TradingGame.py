@@ -1,8 +1,8 @@
-import matplotlib.pyplot as plt
 import my_utils.math.stats as st
 
 from gym_trading.envs.Config import url
 from gym_trading.envs.DataLoader import DataLoader
+from gym_trading.envs.RenderStyle import *
 from gym_trading.envs.Trader import Trader
 
 
@@ -24,6 +24,7 @@ class TradingGame(Trader):
                          sell_fee=fee)
 
         self.data = DataLoader(url).data
+
         if n_samples is not None:
             self.data['dates'] = self.data['dates'][-n_samples:]
             self.data['prices'] = self.data['prices'][-n_samples:]
@@ -104,15 +105,17 @@ class TradingGame(Trader):
                 'price': self.data['prices'][self.current_day_index]}
 
     def plot_chart(self):
-        plt.plot(self.data['dates'], self.data['prices'], label='Price')
+        plt.title(f'Total profit: {round(self.get_profit(), 3)} %')
+
+        plt.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
 
         plt.scatter(self.buy_actions['dates'],
                     self.buy_actions['prices'],
-                    marker='^', c='g', label='BUY')
+                    marker='^', c='g', label='BUY', zorder=2)
 
         plt.scatter(self.sell_actions['dates'],
                     self.sell_actions['prices'],
-                    marker='v', c='r', label='SELL')
+                    marker='v', c='r', label='SELL', zorder=2)
 
         plt.xticks(rotation=90)
 
