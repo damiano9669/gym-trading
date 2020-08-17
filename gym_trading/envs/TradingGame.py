@@ -1,4 +1,5 @@
 import my_utils.math.stats as st
+import numpy as np
 
 from gym_trading.envs.Config import url
 from gym_trading.envs.DataLoader import DataLoader
@@ -8,7 +9,7 @@ from gym_trading.envs.Trader import Trader
 
 class TradingGame(Trader):
 
-    def __init__(self, n_samples=None, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
         """
 
         :param n_samples: number of samples to load from the database
@@ -24,6 +25,16 @@ class TradingGame(Trader):
                          sell_fee=fee)
 
         self.data = DataLoader(url).data
+
+        if sampling_every is not None:
+            new_dates = []
+            new_prices = []
+            for i in range(len(self.data['dates'])):
+                if i % sampling_every == 0:
+                    new_dates.append(self.data['dates'][i])
+                    new_prices.append(self.data['prices'][i])
+            self.data['dates'] = new_dates
+            self.data['prices'] = np.asarray(new_prices)
 
         if n_samples is not None:
             self.data['dates'] = self.data['dates'][-n_samples:]
@@ -122,6 +133,18 @@ class TradingGame(Trader):
         plt.ylabel(f'USD/{self.crypto_currency}')
         plt.xlabel('Date')
         plt.legend()
+
+        interval = self.data['dates'][-1] - self.data['dates'][-2]
+        initial_date = self.data['dates'][0]
+        final_date = self.data['dates'][-1]
+
+        plt.figtext(0.001,
+                    0.001,
+                    f'Sampling interval: {round(interval.total_seconds() / 60)} minutes\n'
+                    f'Initial date: {initial_date} - Final date: {final_date}',
+                    fontsize=10,
+                    verticalalignment='bottom')
+
         plt.show()
 
 

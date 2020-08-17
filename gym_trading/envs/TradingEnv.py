@@ -6,13 +6,14 @@ from gym_trading.envs.TradingGame import TradingGame
 
 class TradingEnv(gym.Env):
 
-    def __init__(self, n_samples=None, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
         """
         :param n_samples: Number of total samples.
         :param stack_size: Number of prices to get for every observation.
         :param fee: percentage of the fee for every conversion.
         """
         self.n_samples = n_samples
+        self.sampling_every = sampling_every
         self.stack_size = stack_size
         self.fee = fee
         self.observation_space = np.zeros(shape=(stack_size,))
@@ -39,6 +40,7 @@ class TradingEnv(gym.Env):
 
     def reset(self):
         self.trader = TradingGame(n_samples=self.n_samples,
+                                  sampling_every=self.sampling_every,
                                   stack_size=self.stack_size,
                                   fee=self.fee)
         observation, done = self.trader.step()
