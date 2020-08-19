@@ -1,12 +1,13 @@
 import gym
-from gym.spaces import Discrete
 import numpy as np
+from gym.spaces import Discrete
+
 from gym_trading.envs.TradingGame import TradingGame
 
 
 class TradingEnv(gym.Env):
 
-    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25, aav_decay=0.9):
         """
         :param n_samples: Number of total samples.
         :param stack_size: Number of prices to get for every observation.
@@ -18,8 +19,11 @@ class TradingEnv(gym.Env):
         self.fee = fee
         self.observation_space = np.zeros(shape=(stack_size,))
         self.action_space = Discrete(2)  # BUY, SELL
-        self.trader = None
-        self.reset()  # to initialize the trader
+        self.trader = TradingGame(n_samples=self.n_samples,
+                                  sampling_every=self.sampling_every,
+                                  stack_size=self.stack_size,
+                                  fee=self.fee,
+                                  aav_decay=aav_decay)
 
     def step(self, action):
         """
@@ -39,10 +43,7 @@ class TradingEnv(gym.Env):
         return observation, self.trader.get_AAV(), done, {}
 
     def reset(self):
-        self.trader = TradingGame(n_samples=self.n_samples,
-                                  sampling_every=self.sampling_every,
-                                  stack_size=self.stack_size,
-                                  fee=self.fee)
+        self.trader.reset()
         observation, done = self.trader.step()
         observation = np.array([ob['price'] for ob in observation])
         return observation

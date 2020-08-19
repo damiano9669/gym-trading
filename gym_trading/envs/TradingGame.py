@@ -9,7 +9,7 @@ from gym_trading.envs.Trader import Trader
 
 class TradingGame(Trader):
 
-    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25, aav_decay=0.9):
         """
 
         :param n_samples: number of samples to load from the database
@@ -23,6 +23,8 @@ class TradingGame(Trader):
                          crypto_currency='BTC',
                          buy_fee=fee,
                          sell_fee=fee)
+
+        self.aav_decay = aav_decay
 
         self.data = DataLoader(url).data
 
@@ -101,7 +103,7 @@ class TradingGame(Trader):
                                     -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1],
                                                                         self.buy_fee)
             # incremental mean formula
-            self.incremental_AAV += (x_k - self.incremental_AAV) / self.N
+            self.incremental_AAV = self.aav_decay * self.incremental_AAV + (x_k - self.incremental_AAV) / self.N
         return performed
 
     def get_profit(self):
@@ -131,7 +133,7 @@ class TradingGame(Trader):
         plt.xticks(rotation=90)
 
         plt.ylabel(f'USD/{self.crypto_currency}')
-        plt.xlabel('Date')
+        plt.xlabel('Time')
         plt.legend()
 
         interval = self.data['dates'][-1] - self.data['dates'][-2]
@@ -147,6 +149,16 @@ class TradingGame(Trader):
                     verticalalignment='bottom')
 
         plt.show()
+
+    def reset(self):
+        self.stack = []
+        self.current_day_index = 0
+
+        self.buy_actions = {'dates': [], 'prices': []}
+        self.sell_actions = {'dates': [], 'prices': []}
+
+        self.incremental_AAV = 0
+        self.N = 0  # number of buy-sell pairs
 
 
 if __name__ == '__main__':
