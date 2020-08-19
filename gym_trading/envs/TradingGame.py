@@ -9,7 +9,7 @@ from gym_trading.envs.Trader import Trader
 
 class TradingGame(Trader):
 
-    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25, aav_decay=0.9):
+    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
         """
 
         :param n_samples: number of samples to load from the database
@@ -21,8 +21,6 @@ class TradingGame(Trader):
                          crypto_currency='BTC',
                          buy_fee=fee,
                          sell_fee=fee)
-
-        self.aav_decay = aav_decay
 
         self.data = DataLoader(url).data
 
@@ -98,10 +96,9 @@ class TradingGame(Trader):
             # for the incremental AAV
             self.N += 1  # updating the number of pairs
             x_k = st.add_percentage(self.sell_actions['prices'][-1],
-                                    -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1],
-                                                                        self.buy_fee)
+                                    -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1], self.buy_fee)
             # incremental mean formula
-            self.incremental_AAV = self.aav_decay * self.incremental_AAV + (x_k - self.incremental_AAV) / self.N
+            self.incremental_AAV = x_k  # += (x_k - self.incremental_AAV) / self.N
         return performed
 
     def get_profit(self):
