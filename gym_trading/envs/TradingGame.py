@@ -98,7 +98,7 @@ class TradingGame(Trader):
             x_k = st.add_percentage(self.sell_actions['prices'][-1],
                                     -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1], self.buy_fee)
             # incremental mean formula
-            self.incremental_AAV = x_k  # += (x_k - self.incremental_AAV) / self.N
+            self.incremental_AAV += (x_k - self.incremental_AAV) / self.N
         return performed
 
     def get_profit(self):
