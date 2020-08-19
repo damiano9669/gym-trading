@@ -6,16 +6,14 @@ class Trader:
     def __init__(self,
                  init_amount=1000.0,
                  init_currency='USD',
-                 current_amount=1000.0,
-                 current_currency='USD',
                  crypto_currency='BTC',
                  buy_fee=0.25,
                  sell_fee=0.25):
 
         self.init_amount = init_amount
         self.init_currency = init_currency
-        self.current_amount = current_amount
-        self.current_currency = current_currency
+        self.current_amount = init_amount
+        self.current_currency = init_currency
         self.crypto_currency = crypto_currency
 
         self.buy_fee = buy_fee
@@ -45,3 +43,9 @@ class Trader:
             self.amounts.append(self.current_amount)
             return True
         return False
+
+    def reset(self):
+        self.current_amount = self.init_amount
+        self.current_currency = self.init_currency
+
+        self.amounts = [self.init_amount]

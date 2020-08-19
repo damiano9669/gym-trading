@@ -18,8 +18,6 @@ class TradingGame(Trader):
         """
         super().__init__(init_amount=1000.0,
                          init_currency='USD',
-                         current_amount=1000.0,
-                         current_currency='USD',
                          crypto_currency='BTC',
                          buy_fee=fee,
                          sell_fee=fee)
@@ -151,6 +149,7 @@ class TradingGame(Trader):
         plt.show()
 
     def reset(self):
+        super(TradingGame, self).reset()
         self.stack = []
         self.current_day_index = 0
 
