@@ -24,6 +24,7 @@ class TradingEnv(gym.Env):
                                   stack_size=self.stack_size,
                                   fee=self.fee,
                                   aav_decay=aav_decay)
+        self.reset()
 
     def step(self, action):
         """
