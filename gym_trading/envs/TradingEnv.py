@@ -7,40 +7,32 @@ from gym_trading.envs.TradingGame import TradingGame
 
 class TradingEnv(gym.Env):
 
-    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25):
         """
         :param n_samples: Number of total samples.
         :param stack_size: Number of prices to get for every observation.
         :param fee: percentage of the fee for every conversion.
         """
-        self.n_samples = n_samples
-        self.sampling_every = sampling_every
-        self.stack_size = stack_size
-        self.fee = fee
-        self.observation_space = np.zeros(shape=(stack_size,))
+        self.observation_space = np.zeros(shape=(stack_size, 1))
         self.action_space = Discrete(2)  # BUY, SELL
-        self.trader = TradingGame(n_samples=self.n_samples,
-                                  sampling_every=self.sampling_every,
-                                  stack_size=self.stack_size,
-                                  fee=self.fee)
+        self.trader = TradingGame(n_samples=n_samples,
+                                  sampling_every=sampling_every,
+                                  random_initial_date=random_initial_date,
+                                  stack_size=stack_size,
+                                  fee=fee)
         self.reset()
 
     def step(self, action):
         """
 
-        :param action:
+        :param action: 0 (BUY) or 1 (SELL)
         :return: observation, reward, done, infos -> observation can be an unique price or a numpy array of prices.
         """
 
-        if action == 0:
-            self.trader.buy()
-        elif action == 1:
-            self.trader.sell()
-
-        observation, done = self.trader.step()
+        observation, done = self.trader.step(action)
         observation = np.array([ob['price'] for ob in observation])
 
-        return observation, self.trader.get_AAV(), done, {}
+        return observation, self.trader.get_reward(), done, {}
 
     def reset(self):
         self.trader.reset()

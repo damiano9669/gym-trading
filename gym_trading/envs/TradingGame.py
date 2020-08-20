@@ -1,6 +1,8 @@
-import my_utils.math.stats as st
+import copy
+
 import numpy as np
 
+from gym_trading.envs.AllenKarjalainenReward import get_excess_return
 from gym_trading.envs.Config import url
 from gym_trading.envs.DataLoader import DataLoader
 from gym_trading.envs.RenderStyle import *
@@ -9,7 +11,7 @@ from gym_trading.envs.Trader import Trader
 
 class TradingGame(Trader):
 
-    def __init__(self, n_samples=None, sampling_every=None, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25):
         """
 
         :param n_samples: number of samples to load from the database
@@ -22,39 +24,59 @@ class TradingGame(Trader):
                          buy_fee=fee,
                          sell_fee=fee)
 
-        self.data = DataLoader(url).data
+        self.n_samples = n_samples
+        self.sampling_every = sampling_every
+        self.random_initial_date = random_initial_date
+        self.stack_size = stack_size
 
-        if sampling_every is not None:
+        self.original_data = DataLoader(url).data
+
+        if self.sampling_every is not None:
             new_dates = []
             new_prices = []
-            for i in range(len(self.data['dates'])):
-                if i % sampling_every == 0:
-                    new_dates.append(self.data['dates'][i])
-                    new_prices.append(self.data['prices'][i])
-            self.data['dates'] = new_dates
-            self.data['prices'] = np.asarray(new_prices)
+            for i in range(len(self.original_data['dates'])):
+                if i % self.sampling_every == 0:
+                    new_dates.append(self.original_data['dates'][i])
+                    new_prices.append(self.original_data['prices'][i])
+            self.original_data['dates'] = new_dates
+            self.original_data['prices'] = np.asarray(new_prices)
 
-        if n_samples is not None:
-            self.data['dates'] = self.data['dates'][-n_samples:]
-            self.data['prices'] = self.data['prices'][-n_samples:]
+        self.data = copy.deepcopy(self.original_data)
 
-        self.stack_size = stack_size
+        self.reset()
+
+    def reset(self):
+        super(TradingGame, self).reset()
+
+        if self.n_samples is not None:
+            initial_position = np.random.randint(0, len(
+                self.original_data['dates']) - self.n_samples) if self.random_initial_date else 1
+            self.data['dates'] = self.original_data['dates'][-(self.n_samples + initial_position):-initial_position]
+            self.data['prices'] = self.original_data['prices'][-(self.n_samples + initial_position):-initial_position]
+
         self.stack = []
         self.current_day_index = 0
 
         self.buy_actions = {'dates': [], 'prices': []}
         self.sell_actions = {'dates': [], 'prices': []}
 
-        self.incremental_AAV = 0
-        self.N = 0  # number of buy-sell pairs
+        # for th computation of the reward: Allen and Karjalainen's method
+        self.buy_signals = []  # contains 1 for buy actions and 0 otherwise
+        self.sell_signals = []  # same but for sell actions
+        self.P = []  # prices until now
+        self.n = 0  # number of buy-sell pairs
 
-    def step(self):
+    def step(self, action=None):
         """
             To perform a step:
                 - updating current day;
                 - checking if this is the last day;
+        :param action: 0 (BUY) or 1 (SELL)
         :return:
         """
+        # for th computation of the reward: Allen and Karjalainen's method
+        self.update_AK_data(action)
+
         done = False
         self.current_day_index += 1
         if self.current_day_index >= len(self.data['dates']):
@@ -79,12 +101,38 @@ class TradingGame(Trader):
                 # in case of normal situations, we return the updated stack
                 return self.stack, done
 
+    def update_AK_data(self, action):
+        # updating prices list
+        if action == 0 or action == 1:
+            self.P.append(self.get_data_now()['price'])
+        # updating the signals and n
+        if action == 0:  # BUY
+            performed = self.buy()
+            if performed:
+                self.buy_signals.append(1)  # adding the signal to the list
+                self.sell_signals.append(0)
+            else:
+                # here only if the action was buy, but we have just bought
+                self.buy_signals.append(0)
+                self.sell_signals.append(0)
+        elif action == 1:  # SELL
+            performed = self.sell()
+            if performed:
+                self.buy_signals.append(0)
+                self.sell_signals.append(1)
+                self.n += 1  # in this case we have a complete pair
+            else:
+                self.buy_signals.append(0)
+                self.sell_signals.append(0)
+
     def buy(self):
         data_now = self.get_data_now()
         performed = super(TradingGame, self).buy(data_now['price'])
         if performed:
             self.buy_actions['dates'].append(data_now['date'])
             self.buy_actions['prices'].append(data_now['price'])
+
+        return performed
 
     def sell(self):
         data_now = self.get_data_now()
@@ -93,29 +141,29 @@ class TradingGame(Trader):
             self.sell_actions['dates'].append(data_now['date'])
             self.sell_actions['prices'].append(data_now['price'])
 
-            # for the incremental AAV
-            self.N += 1  # updating the number of pairs
-            x_k = st.add_percentage(self.sell_actions['prices'][-1],
-                                    -self.sell_fee) - st.add_percentage(self.buy_actions['prices'][-1], self.buy_fee)
-            # incremental mean formula
-            self.incremental_AAV += (x_k - self.incremental_AAV) / self.N
         return performed
 
     def get_profit(self):
         data_now = self.get_data_now()
         return super(TradingGame, self).get_profit(data_now['price'])
 
-    def get_AAV(self):
-        return self.incremental_AAV
+    def get_reward(self):
+        return get_excess_return(P=np.asarray(self.P),
+                                 I_b=np.asarray(self.buy_signals), I_s=np.asarray(self.sell_signals),
+                                 n=self.n,
+                                 buy_fee=self.buy_fee, sell_fee=self.sell_fee)
 
     def get_data_now(self):
         return {'date': self.data['dates'][self.current_day_index],
                 'price': self.data['prices'][self.current_day_index]}
 
     def plot_chart(self):
-        plt.title(f'Total profit: {round(self.get_profit(), 3)} % (fee: {self.buy_fee} %)')
+
+        plt.title(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
 
         plt.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
+
+        plt.axvline(self.data['dates'][self.stack_size], 0, 1, c='C2', alpha=0.3, label='Observation limit')
 
         plt.scatter(self.buy_actions['dates'],
                     self.buy_actions['prices'],
@@ -144,26 +192,3 @@ class TradingGame(Trader):
                     verticalalignment='bottom')
 
         plt.show()
-
-    def reset(self):
-        super(TradingGame, self).reset()
-        self.stack = []
-        self.current_day_index = 0
-
-        self.buy_actions = {'dates': [], 'prices': []}
-        self.sell_actions = {'dates': [], 'prices': []}
-
-        self.incremental_AAV = 0
-        self.N = 0  # number of buy-sell pairs
-
-
-if __name__ == '__main__':
-
-    game = TradingGame()
-
-    done = False
-    while not done:
-        data, done = game.step()
-        print(data, done)
-
-    game.plot_chart()
