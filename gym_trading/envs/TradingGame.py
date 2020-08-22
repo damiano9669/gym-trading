@@ -2,16 +2,22 @@ import copy
 
 import numpy as np
 
-from gym_trading.envs.AllenKarjalainenReward import get_excess_return
 from gym_trading.envs.Config import url
 from gym_trading.envs.DataLoader import DataLoader
 from gym_trading.envs.RenderStyle import *
 from gym_trading.envs.Trader import Trader
+from gym_trading.envs.reward_functions.AAV import get_AAV
+from gym_trading.envs.reward_functions.AllenKarjalainen import get_AllenKarjalainen_excess_return
+from gym_trading.envs.reward_functions.ROI import get_ROI
 
 
 class TradingGame(Trader):
+    reward_functions = {'ROI': get_ROI,
+                        'AAV': get_AAV,
+                        'Allen_and_Karjalainen': get_AllenKarjalainen_excess_return}
 
-    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25,
+                 reward_function='AAV'):
         """
 
         :param n_samples: number of samples to load from the database
@@ -28,6 +34,11 @@ class TradingGame(Trader):
         self.sampling_every = sampling_every
         self.random_initial_date = random_initial_date
         self.stack_size = stack_size
+
+        if reward_function not in list(self.reward_functions.keys()):
+            raise Exception(f'Reward function not implemented. Please, choose between: {list(self.reward_functions.keys())}')
+
+        self.reward_function = reward_function
 
         self.original_data = DataLoader(url).data
 
@@ -54,13 +65,15 @@ class TradingGame(Trader):
             self.data['dates'] = self.original_data['dates'][-(self.n_samples + initial_position):-initial_position]
             self.data['prices'] = self.original_data['prices'][-(self.n_samples + initial_position):-initial_position]
 
+        self.rewards = {'dates': [], 'rewards': []}
+
         self.stack = []
         self.current_day_index = 0
 
         self.buy_actions = {'dates': [], 'prices': []}
         self.sell_actions = {'dates': [], 'prices': []}
 
-        # for th computation of the reward: Allen and Karjalainen's method
+        # for the computation of the reward
         self.buy_signals = []  # contains 1 for buy actions and 0 otherwise
         self.sell_signals = []  # same but for sell actions
         self.P = []  # prices until now
@@ -75,7 +88,7 @@ class TradingGame(Trader):
         :return:
         """
         # for th computation of the reward: Allen and Karjalainen's method
-        self.update_AK_data(action)
+        self.update_reward_parameters(action)
 
         done = False
         self.current_day_index += 1
@@ -92,6 +105,7 @@ class TradingGame(Trader):
 
         # if we have done we return the stack, also in case of non-full stack
         if done:
+            self.sell()
             return self.stack, done
         else:
             # otherwise we call a recursion until stack is full
@@ -101,7 +115,7 @@ class TradingGame(Trader):
                 # in case of normal situations, we return the updated stack
                 return self.stack, done
 
-    def update_AK_data(self, action):
+    def update_reward_parameters(self, action):
         # updating prices list
         if action == 0 or action == 1:
             self.P.append(self.get_data_now()['price'])
@@ -148,10 +162,15 @@ class TradingGame(Trader):
         return super(TradingGame, self).get_profit(data_now['price'])
 
     def get_reward(self):
-        return get_excess_return(P=np.asarray(self.P),
-                                 I_b=np.asarray(self.buy_signals), I_s=np.asarray(self.sell_signals),
-                                 n=self.n,
-                                 buy_fee=self.buy_fee, sell_fee=self.sell_fee)
+        reward = self.reward_functions[self.reward_function](P=np.asarray(self.P),
+                                                             I_b=np.asarray(self.buy_signals),
+                                                             I_s=np.asarray(self.sell_signals),
+                                                             n=self.n,
+                                                             buy_fee=self.buy_fee, sell_fee=self.sell_fee)
+        data_now = self.get_data_now()
+        self.rewards['dates'].append(data_now['date'])
+        self.rewards['rewards'].append(reward)
+        return reward
 
     def get_data_now(self):
         return {'date': self.data['dates'][self.current_day_index],
@@ -159,25 +178,34 @@ class TradingGame(Trader):
 
     def plot_chart(self):
 
-        plt.title(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(20, 12))
 
-        plt.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
+        ax1.set_title(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
 
-        plt.axvline(self.data['dates'][self.stack_size], 0, 1, c='C2', alpha=0.3, label='Observation limit')
+        ax1.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
 
-        plt.scatter(self.buy_actions['dates'],
+        ax1.axvline(self.data['dates'][self.stack_size], 0, 1, c='C2', alpha=0.3, label='Observation limit')
+
+        ax1.scatter(self.buy_actions['dates'],
                     self.buy_actions['prices'],
                     marker='^', c='g', label='BUY', zorder=2)
 
-        plt.scatter(self.sell_actions['dates'],
+        ax1.scatter(self.sell_actions['dates'],
                     self.sell_actions['prices'],
                     marker='v', c='r', label='SELL', zorder=2)
 
-        plt.xticks(rotation=90)
+        ax1.set_ylabel(f'USD/{self.crypto_currency}')
+        ax1.set_xlabel('Time')
+        ax1.legend()
 
-        plt.ylabel(f'USD/{self.crypto_currency}')
-        plt.xlabel('Time')
-        plt.legend()
+        ax2.set_title(f'{self.reward_function} Reward Function')
+        ax2.plot(self.rewards['dates'], self.rewards['rewards'])
+        ax2.plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])), alpha=0)
+        ax2.set_ylabel(f'Reward')
+        ax2.set_xlabel('Time')
+
+        plt.setp(ax1.xaxis.get_majorticklabels(), rotation=90)
+        plt.setp(ax2.xaxis.get_majorticklabels(), rotation=90)
 
         interval = self.data['dates'][-1] - self.data['dates'][-2]
         initial_date = self.data['dates'][0]
@@ -188,7 +216,9 @@ class TradingGame(Trader):
                     f'Sampling interval: {round(interval.total_seconds() / 60)} minutes\n'
                     f'Total number of days: {round((((final_date - initial_date).total_seconds() / 60) / 60) / 24)}\n'
                     f'Initial date: {initial_date} - Final date: {final_date}',
-                    fontsize=10,
-                    verticalalignment='bottom')
+                    fontsize=20,
+                    verticalalignment='bottom',
+                    c='C2',
+                    alpha=0.5)
 
         plt.show()

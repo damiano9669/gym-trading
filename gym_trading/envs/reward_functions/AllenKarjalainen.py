@@ -5,19 +5,18 @@ import numpy as np
 """
 
 
-def get_excess_return(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
+def get_AllenKarjalainen_excess_return(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
     """
         Excess return or fitness for trading
     :param P: prices collected
     :param I_b: buy signals collected
-    :param I_s: sell signals collectes
+    :param I_s: sell signals collected
     :param n: number of buy-sell pairs
     :param buy_fee: buy fee
     :param sell_fee: sell fee
     :return:
     """
-    return get_r(P, I_b, I_s, n, buy_fee=buy_fee, sell_fee=sell_fee) - \
-           get_r_bh(P, buy_fee=buy_fee, sell_fee=sell_fee)
+    return get_r(P, I_b, I_s, n, buy_fee=buy_fee, sell_fee=sell_fee) - get_r_bh(P, buy_fee=buy_fee, sell_fee=sell_fee)
 
 
 def get_r(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
@@ -31,9 +30,7 @@ def get_r(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
     :param sell_fee:
     :return:
     """
-    return get_r_t(P).T.dot(I_b[1:]) + \
-           get_r_f(P).T.dot(I_s[1:]) + \
-           n * np.log((1 - buy_fee) / (1 + sell_fee))
+    return get_r_t(P).T.dot(I_b[1:]) + get_r_f(P).T.dot(I_s[1:]) + n * np.log((1 - buy_fee) / (1 + sell_fee))
 
 
 def get_r_bh(P, buy_fee=0.25, sell_fee=0.25):
@@ -62,6 +59,5 @@ def get_r_f(P):
     :param P:
     :return:
     """
-    # Sincerely I don't know if this is correct
-    x = np.arange(0, P.shape[0] - 1, 1)
-    return np.exp(-x)
+    # Sincerely I'm not sure about this.
+    return np.full((P.shape[0] - 1,), fill_value=1.1)

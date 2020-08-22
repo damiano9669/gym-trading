@@ -28,6 +28,7 @@ class DataLoader:
         return {'dates': dates, 'prices': data['prices'].to_numpy(np.float32)}
 
     def download_data(self):
+        print('Downloading dataset...')
         response = requests.get(self.url).content
         data = pd.read_csv(io.StringIO(response.decode('utf-8')))
         return data

@@ -7,7 +7,7 @@ from gym_trading.envs.TradingGame import TradingGame
 
 class TradingEnv(gym.Env):
 
-    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25):
+    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25, reward_function='AAV'):
         """
         :param n_samples: Number of total samples.
         :param stack_size: Number of prices to get for every observation.
@@ -19,7 +19,8 @@ class TradingEnv(gym.Env):
                                   sampling_every=sampling_every,
                                   random_initial_date=random_initial_date,
                                   stack_size=stack_size,
-                                  fee=fee)
+                                  fee=fee,
+                                  reward_function=reward_function)
         self.reset()
 
     def step(self, action):
