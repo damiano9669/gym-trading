@@ -14,7 +14,9 @@ def get_AAV(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
     :param sell_fee: sell fee
     :return:
     """
-    P = P / np.max(P)
+    if n == 0:
+        return 0
+
     P_s_prime = st.add_percentage(P, -sell_fee) * I_s
     P_b_prime = st.add_percentage(P, buy_fee) * I_b
 
@@ -27,7 +29,5 @@ def get_AAV(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
             P_b.append(pb)
 
     P_b = P_b[:-1] if len(P_b) > len(P_s) else P_b
-    if n == 0:
-        return 0
 
-    return np.sum(np.asarray(P_s) - np.asarray(P_b)) / (2 * n)
+    return np.sum(np.asarray(P_s) - np.asarray(P_b)) / n

@@ -36,7 +36,8 @@ class TradingGame(Trader):
         self.stack_size = stack_size
 
         if reward_function not in list(self.reward_functions.keys()):
-            raise Exception(f'Reward function not implemented. Please, choose between: {list(self.reward_functions.keys())}')
+            raise Exception(
+                f'Reward function not implemented. Please, choose between: {list(self.reward_functions.keys())}')
 
         self.reward_function = reward_function
 
