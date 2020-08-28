@@ -17,17 +17,16 @@ def get_AAV(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
     if n == 0:
         return 0
 
-    P_s_prime = st.add_percentage(P, -sell_fee) * I_s
-    P_b_prime = st.add_percentage(P, buy_fee) * I_b
+    P_s = st.add_percentage(P, -sell_fee) * I_s
+    P_b = st.add_percentage(P, buy_fee) * I_b
 
-    P_s = []
-    P_b = []
-    for ps, pb in zip(P_s_prime, P_b_prime):
-        if ps != 0:
-            P_s.append(ps)
-        if pb != 0:
-            P_b.append(pb)
+    P_s = P_s[np.where(P_s != 0)]
+    P_b = P_b[np.where(P_b != 0)]
 
-    P_b = P_b[:-1] if len(P_b) > len(P_s) else P_b
+    P_b = P_b[:-1] if P_b.shape[0] > P_s.shape[0] else P_b
 
-    return np.sum(np.asarray(P_s) - np.asarray(P_b)) / n
+    incremental_aav = 0
+    for ni, (ps, pb) in enumerate(zip(P_s, P_b)):
+        xi = ps - pb
+        incremental_aav += (xi - incremental_aav) / (ni + 100)  # (ni +1) is for the real incremental mean
+    return incremental_aav

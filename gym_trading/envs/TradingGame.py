@@ -24,7 +24,7 @@ class TradingGame(Trader):
         :param stack_size: size of the observations
         :param fee:
         """
-        super().__init__(init_amount=1000.0,
+        super().__init__(init_amount=1.0,
                          init_currency='USD',
                          crypto_currency='BTC',
                          buy_fee=fee,
@@ -96,9 +96,9 @@ class TradingGame(Trader):
         if self.current_day_index >= len(self.data['dates']):
             self.current_day_index -= 1
             done = True
-        data = self.get_data_now()
 
-        # adding element to the lsit
+        data = self.get_data_now()
+        # adding element to the list
         self.stack.append(data)
         # checking if the list exceeds the maximum number
         if len(self.stack) > self.stack_size:
@@ -106,7 +106,7 @@ class TradingGame(Trader):
 
         # if we have done we return the stack, also in case of non-full stack
         if done:
-            self.sell()
+            # self.sell()
             return self.stack, done
         else:
             # otherwise we call a recursion until stack is full
@@ -179,13 +179,14 @@ class TradingGame(Trader):
 
     def plot_chart(self):
 
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(20, 12))
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
 
         ax1.set_title(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
 
         ax1.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
 
-        ax1.axvline(self.data['dates'][self.stack_size], 0, 1, c='C2', alpha=0.3, label='Observation limit')
+        ax1.axvline(self.data['dates'][self.stack_size], 0, 1, c='g', alpha=0.5, label='Start Date')
+        ax1.axvline(self.get_data_now()['date'], 0, 1, c='r', alpha=0.5, label='End Date')
 
         ax1.scatter(self.buy_actions['dates'],
                     self.buy_actions['prices'],
@@ -212,14 +213,17 @@ class TradingGame(Trader):
         initial_date = self.data['dates'][0]
         final_date = self.data['dates'][-1]
 
-        plt.figtext(0.01,
-                    0.01,
-                    f'Sampling interval: {round(interval.total_seconds() / 60)} minutes\n'
-                    f'Total number of days: {round((((final_date - initial_date).total_seconds() / 60) / 60) / 24)}\n'
-                    f'Initial date: {initial_date} - Final date: {final_date}',
-                    fontsize=20,
-                    verticalalignment='bottom',
-                    c='C2',
-                    alpha=0.5)
+        sampling_interval_minutes = round(interval.total_seconds() / 60)
+        tot_days = round((((final_date - initial_date).total_seconds() / 60) / 60) / 24)
 
-        plt.show()
+        fig.text(0.01,
+                 0.02,
+                 f'Sampling interval: {sampling_interval_minutes} minutes '
+                 f'({round(sampling_interval_minutes / 60, 2)} hours)\n'
+                 f'Total number of days: {tot_days} ({round(tot_days / 365, 2)} years)\n'
+                 f'Initial date: {initial_date} - Final date: {final_date}',
+                 fontsize=20,
+                 c='white',
+                 ha="left", va='bottom', bbox=dict(facecolor='grey', alpha=1.))
+
+        fig.show()
