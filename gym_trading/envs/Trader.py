@@ -6,7 +6,6 @@ class Trader:
     def __init__(self,
                  init_amount=1000.0,
                  init_currency='USD',
-                 crypto_currency='BTC',
                  buy_fee=0.25,
                  sell_fee=0.25):
 
@@ -14,7 +13,6 @@ class Trader:
         self.init_currency = init_currency
         self.current_amount = init_amount
         self.current_currency = init_currency
-        self.crypto_currency = crypto_currency
 
         self.buy_fee = buy_fee
         self.sell_fee = sell_fee
@@ -29,15 +27,15 @@ class Trader:
             # in this case, before to compute the percentage, we have to do a fake conversion in USD
             return ((self.current_amount * price) / self.init_amount - 1) * 100
 
-    def buy(self, price):
+    def buy(self, price, crypto_currency):
         if self.current_currency == self.init_currency:
             self.current_amount = st.add_percentage(self.current_amount / price, -self.buy_fee)
-            self.current_currency = self.crypto_currency
+            self.current_currency = crypto_currency
             return True
         return False
 
-    def sell(self, price):
-        if self.current_currency == self.crypto_currency:
+    def sell(self, price, crypto_currency):
+        if self.current_currency == crypto_currency:
             self.current_amount = st.add_percentage(self.current_amount * price, -self.sell_fee)
             self.current_currency = self.init_currency
             self.amounts.append(self.current_amount)

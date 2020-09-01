@@ -16,8 +16,11 @@ class TradingEnv(gym.Env):
         """
         self.endurance_mode = endurance_mode
         self.normalize = normalize_observation
-        self.observation_space = np.zeros(shape=(stack_size, 1))
-        self.action_space = Discrete(2)  # BUY, SELL
+        self.observation_space = np.zeros(shape=(stack_size, 3))
+        self.action_space = Discrete(6)
+        # 0 (BUY_BTC),  1 (SELL_BTC),
+        # 2 (BUY_XRP), 3 (SELL_XRP),
+        # 4 (BUY_ETH), 5 (SELL_ETH)
         self.trader = TradingGame(n_samples=n_samples,
                                   sampling_every=sampling_every,
                                   random_initial_date=random_initial_date,
@@ -29,7 +32,7 @@ class TradingEnv(gym.Env):
     def step(self, action):
         """
 
-        :param action: 0 (BUY) or 1 (SELL)
+        :param action: 0 (BUY_BTC),  1 (SELL_BTC), 2 (BUY_XRP), 3 (SELL_XRP), 4 (BUY_ETH), 5 (SELL_ETH)
         :return: observation, reward, done, infos -> observation can be an unique price or a numpy array of prices.
         """
 
@@ -59,9 +62,14 @@ class TradingEnv(gym.Env):
         return self.trader.get_profit()
 
     def clean_observation(self, observation):
-        observation = np.array([ob['price'] for ob in observation])
-        # observation = np.expand_dims(observation, axis=1)
-        return observation
+        crypto_obs = []
+        for key in list(self.trader.data.keys())[1:]:
+            crypto_stack = []
+            for ob in observation:
+                crypto_stack.append(ob[key.replace('s', '')])
+            crypto_obs.append(np.asarray(crypto_stack))
+
+        return np.stack(crypto_obs, axis=-1)
 
     def normalize_observation(self, x):
         x_mean = np.mean(x)

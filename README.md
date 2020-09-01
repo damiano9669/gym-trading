@@ -7,7 +7,7 @@ This library is a work in progress project.
 
 More detailed instructions will be added.
 
-Currently you can understand the dynamics of the library looking at the [example](example.ipynb).
+Currently you can understand the dynamics of the library looking at the [example](examples/example.ipynb).
 
 ### Requirements
 

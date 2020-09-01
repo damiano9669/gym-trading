@@ -2,8 +2,7 @@ import copy
 
 import numpy as np
 
-from gym_trading.envs.Config import url
-from gym_trading.envs.DataLoader import DataLoader
+from gym_trading.envs.DataLoader import get_all_data
 from gym_trading.envs.RenderStyle import *
 from gym_trading.envs.Trader import Trader
 from gym_trading.envs.reward_functions.AAV import get_AAV
@@ -16,7 +15,12 @@ class TradingGame(Trader):
                         'AAV': get_AAV,
                         'Allen_and_Karjalainen': get_AllenKarjalainen_excess_return}
 
-    def __init__(self, n_samples=None, sampling_every=None, random_initial_date=False, stack_size=1, fee=0.25,
+    def __init__(self,
+                 n_samples=None,
+                 sampling_every=None,
+                 random_initial_date=False,
+                 stack_size=1,
+                 fee=0.25,
                  reward_function='AAV'):
         """
 
@@ -26,7 +30,6 @@ class TradingGame(Trader):
         """
         super().__init__(init_amount=1.0,
                          init_currency='USD',
-                         crypto_currency='BTC',
                          buy_fee=fee,
                          sell_fee=fee)
 
@@ -41,17 +44,21 @@ class TradingGame(Trader):
 
         self.reward_function = reward_function
 
-        self.original_data = DataLoader(url).data
+        self.original_data = get_all_data()
 
         if self.sampling_every is not None:
             new_dates = []
-            new_prices = []
+            new_prices = {key: [] for key in list(self.original_data.keys())[1:]}  # [1:] is to skip 'dates'
             for i in range(len(self.original_data['dates'])):
+                # extract every n samples
                 if i % self.sampling_every == 0:
                     new_dates.append(self.original_data['dates'][i])
-                    new_prices.append(self.original_data['prices'][i])
+                    for key in new_prices.keys():
+                        new_prices[key].append(self.original_data[key][i])
+            # set to original data
             self.original_data['dates'] = new_dates
-            self.original_data['prices'] = np.asarray(new_prices)
+            for key in new_prices.keys():
+                self.original_data[key] = np.asarray(new_prices[key])
 
         self.data = copy.deepcopy(self.original_data)
 
@@ -64,31 +71,30 @@ class TradingGame(Trader):
             initial_position = np.random.randint(0, len(
                 self.original_data['dates']) - self.n_samples) if self.random_initial_date else 1
             self.data['dates'] = self.original_data['dates'][-(self.n_samples + initial_position):-initial_position]
-            self.data['prices'] = self.original_data['prices'][-(self.n_samples + initial_position):-initial_position]
+            for key in list(self.data.keys())[1:]:
+                self.data[key] = self.original_data[key][
+                                 -(self.n_samples + initial_position):-initial_position]
 
         self.rewards = {'dates': [], 'rewards': []}
 
         self.stack = []
         self.current_day_index = 0
 
-        self.buy_actions = {'dates': [], 'prices': []}
-        self.sell_actions = {'dates': [], 'prices': []}
-
         # for the computation of the reward
-        self.buy_signals = []  # contains 1 for buy actions and 0 otherwise
-        self.sell_signals = []  # same but for sell actions
-        self.P = []  # prices until now
-        self.n = 0  # number of buy-sell pairs
+        self.buy_signals = {key: [] for key in list(self.data.keys())[1:]}  # contains 1 for buy actions and 0 otherwise
+        self.sell_signals = {key: [] for key in list(self.data.keys())[1:]}  # same but for sell actions
+        self.P = {key: [] for key in list(self.data.keys())[1:]}  # prices until now
+        self.n = {key: 0 for key in list(self.data.keys())[1:]}  # number of buy-sell pairs
 
     def step(self, action=None):
         """
             To perform a step:
                 - updating current day;
                 - checking if this is the last day;
-        :param action: 0 (BUY) or 1 (SELL)
+        :param action: 0 (BUY_BTC),  1 (SELL_BTC), 2 (BUY_XRP), 3 (SELL_XRP), 4 (BUY_ETH), 5 (SELL_ETH)
         :return:
         """
-        # for th computation of the reward: Allen and Karjalainen's method
+        # for th computation of the reward
         self.update_reward_parameters(action)
 
         done = False
@@ -117,97 +123,111 @@ class TradingGame(Trader):
                 return self.stack, done
 
     def update_reward_parameters(self, action):
-        # updating prices list
-        if action == 0 or action == 1:
-            self.P.append(self.get_data_now()['price'])
-        # updating the signals and n
-        if action == 0:  # BUY
-            performed = self.buy()
-            if performed:
-                self.buy_signals.append(1)  # adding the signal to the list
-                self.sell_signals.append(0)
+        for key in list(self.data.keys())[1:]:
+
+            # updating prices list
+            if action in range(0, 6):
+                self.P[key].append(self.get_data_now()[key.replace('s', '')])
             else:
-                # here only if the action was buy, but we have just bought
-                self.buy_signals.append(0)
-                self.sell_signals.append(0)
-        elif action == 1:  # SELL
-            performed = self.sell()
-            if performed:
-                self.buy_signals.append(0)
-                self.sell_signals.append(1)
-                self.n += 1  # in this case we have a complete pair
+                self.P[key].append(0)
+            # updating the signals and n
+            if (
+                    (action == 0 and key == 'BTC_prices') or
+                    (action == 2 and key == 'XRP_prices') or
+                    (action == 4 and key == 'ETH_prices')):  # BUY
+                performed = self.buy(key.replace('_prices', ''))
+                if performed:
+                    self.buy_signals[key].append(1)  # adding the signal to the list
+                    self.sell_signals[key].append(0)
+                else:
+                    # here only if the action was buy, but we have just bought
+                    self.buy_signals[key].append(0)
+                    self.sell_signals[key].append(0)
+            elif (
+                    (action == 1 and key == 'BTC_prices') or
+                    (action == 3 and key == 'XRP_prices') or
+                    (action == 5 and key == 'ETH_prices')):  # SELL
+                performed = self.sell(key.replace('_prices', ''))
+                if performed:
+                    self.buy_signals[key].append(0)
+                    self.sell_signals[key].append(1)
+                    self.n[key] += 1  # in this case we have a complete pair
+                else:
+                    self.buy_signals[key].append(0)
+                    self.sell_signals[key].append(0)
             else:
-                self.buy_signals.append(0)
-                self.sell_signals.append(0)
+                self.buy_signals[key].append(0)
+                self.sell_signals[key].append(0)
 
-    def buy(self):
+    def buy(self, crypto_currency):
+        key = f'{crypto_currency}_price'
         data_now = self.get_data_now()
-        performed = super(TradingGame, self).buy(data_now['price'])
-        if performed:
-            self.buy_actions['dates'].append(data_now['date'])
-            self.buy_actions['prices'].append(data_now['price'])
+        return super(TradingGame, self).buy(price=data_now[key],
+                                            crypto_currency=crypto_currency)
 
-        return performed
-
-    def sell(self):
+    def sell(self, crypto_currency):
+        key = f'{crypto_currency}_price'
         data_now = self.get_data_now()
-        performed = super(TradingGame, self).sell(data_now['price'])
-        if performed:
-            self.sell_actions['dates'].append(data_now['date'])
-            self.sell_actions['prices'].append(data_now['price'])
-
-        return performed
+        return super(TradingGame, self).sell(price=data_now[key],
+                                             crypto_currency=crypto_currency)
 
     def get_profit(self):
         data_now = self.get_data_now()
-        return super(TradingGame, self).get_profit(data_now['price'])
+        return super(TradingGame, self).get_profit(data_now[f'{self.current_currency}_price'])
 
     def get_reward(self):
-        reward = self.reward_functions[self.reward_function](P=np.asarray(self.P),
-                                                             I_b=np.asarray(self.buy_signals),
-                                                             I_s=np.asarray(self.sell_signals),
-                                                             n=self.n,
-                                                             buy_fee=self.buy_fee, sell_fee=self.sell_fee)
+        reward = 0
+        for key in list(self.data.keys())[1:]:
+            reward += self.reward_functions[self.reward_function](P=np.asarray(self.P[key]),
+                                                                  I_b=np.asarray(self.buy_signals[key]),
+                                                                  I_s=np.asarray(self.sell_signals[key]),
+                                                                  n=self.n[key],
+                                                                  buy_fee=self.buy_fee, sell_fee=self.sell_fee)
         data_now = self.get_data_now()
         self.rewards['dates'].append(data_now['date'])
         self.rewards['rewards'].append(reward)
         return reward
 
     def get_data_now(self):
-        return {'date': self.data['dates'][self.current_day_index],
-                'price': self.data['prices'][self.current_day_index]}
+        data_now = {}
+        for key in self.data.keys():
+            data_now[key.replace('s', '')] = self.data[key][self.current_day_index]
+        return data_now
 
     def plot_chart(self):
 
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
+        fig, axs = plt.subplots(len(list(self.data.keys())[1:]) + 1, 1, figsize=(15, 20))
 
-        ax1.set_title(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
+        fig.suptitle(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
 
-        ax1.plot(self.data['dates'], self.data['prices'], alpha=0.7, label='Price', zorder=1)
+        for key, ax in zip(list(self.data.keys())[1:], axs[:-1]):
+            ax.plot(self.data['dates'], self.data[key], alpha=0.7, label='Price', zorder=1)
 
-        ax1.axvline(self.data['dates'][self.stack_size], 0, 1, c='g', alpha=0.5, label='Start Date')
-        ax1.axvline(self.get_data_now()['date'], 0, 1, c='r', alpha=0.5, label='End Date')
+            ax.axvline(self.data['dates'][self.stack_size], 0, 1, c='g', alpha=0.5, label='Start Date')
+            ax.axvline(self.get_data_now()['date'], 0, 1, c='r', alpha=0.5, label='End Date')
 
-        ax1.scatter(self.buy_actions['dates'],
-                    self.buy_actions['prices'],
-                    marker='^', c='g', label='BUY', zorder=2)
+            ax.scatter([date for i, date in enumerate(self.data['dates']) if self.buy_signals[key][i] == 1],
+                       [date for i, date in enumerate(self.data[key]) if self.buy_signals[key][i] == 1],
+                       marker='^', c='g', label='BUY', zorder=2)
 
-        ax1.scatter(self.sell_actions['dates'],
-                    self.sell_actions['prices'],
-                    marker='v', c='r', label='SELL', zorder=2)
+            ax.scatter([date for i, date in enumerate(self.data['dates']) if self.sell_signals[key][i] == 1],
+                       [date for i, date in enumerate(self.data[key]) if self.sell_signals[key][i] == 1],
+                       marker='v', c='r', label='SELL', zorder=2)
 
-        ax1.set_ylabel(f'USD/{self.crypto_currency}')
-        ax1.set_xlabel('Time')
-        ax1.legend()
+            crypto = key.replace('_prices', '')
+            ax.set_ylabel(f'USD/{crypto}')
+            ax.set_xlabel('Time')
+            ax.legend()
 
-        ax2.set_title(f'{self.reward_function} Reward Function')
-        ax2.plot(self.rewards['dates'], self.rewards['rewards'])
-        ax2.plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])), alpha=0)
-        ax2.set_ylabel(f'Reward')
-        ax2.set_xlabel('Time')
+        axs[-1].set_title(f'{self.reward_function} Reward Function')
+        axs[-1].plot(self.rewards['dates'], self.rewards['rewards'])
+        axs[-1].plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])),
+                     alpha=0)
+        axs[-1].set_ylabel(f'Reward')
+        axs[-1].set_xlabel('Time')
 
-        plt.setp(ax1.xaxis.get_majorticklabels(), rotation=90)
-        plt.setp(ax2.xaxis.get_majorticklabels(), rotation=90)
+        for ax in axs:
+            plt.setp(ax.xaxis.get_majorticklabels(), rotation=90)
 
         interval = self.data['dates'][-1] - self.data['dates'][-2]
         initial_date = self.data['dates'][0]
