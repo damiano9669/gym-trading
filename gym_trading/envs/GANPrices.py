@@ -1,15 +1,15 @@
 import datetime
-import os
+from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
 
 
 class GANPrices:
-    sampling_intervals = {1: {'model_path': 'gym_trading/envs/models/BTC_generator_model_15minutes',
+    sampling_intervals = {1: {'model_path': 'models/BTC_generator_model_15minutes',
                               'seed_size': 100,
                               'output_len': 1000},
-                          192: {'model_path': 'gym_trading/envs/models/BTC_generator_model_2days',
+                          192: {'model_path': 'models/BTC_generator_model_2days',
                                 'seed_size': 100,
                                 'output_len': 100}}
 
@@ -20,8 +20,8 @@ class GANPrices:
                 f'No model has been trained for the selected sampling_interval. '
                 f'Please, choose between: {list(self.sampling_intervals.keys())}')
 
-        print(os.system('ls -l'))
-        self.model = tf.keras.models.load_model(self.sampling_intervals[self.interval]['model_path'])
+        path = Path(__file__).parent / self.sampling_intervals[self.interval]['model_path']
+        self.model = tf.keras.models.load_model(path)
 
     def get_sample(self):
         seed = tf.random.normal([1, self.sampling_intervals[self.interval]['seed_size']])
