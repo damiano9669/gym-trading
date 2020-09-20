@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5b13d34-8056-4f70-8853-135661ea6e71" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/GANPrices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_15minutes/saved_model.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_15minutes/variables/variables.data-00000-of-00002" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_15minutes/variables/variables.data-00001-of-00002" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_15minutes/variables/variables.index" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_2days/saved_model.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_2days/variables/variables.data-00000-of-00002" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_2days/variables/variables.data-00001-of-00002" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym_trading/envs/models/BTC_generator_model_2days/variables/variables.index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gym-trading.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gym-trading.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_trading/envs/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/Config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_trading/envs/DataLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/DataLoader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_trading/envs/Trader.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/Trader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingEnv.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym_trading/envs/TradingGame.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,17 +55,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/gym_trading/envs" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gym_trading/envs" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/examples" />
       <recent name="$PROJECT_DIR$/gym_trading/envs/reward_functions" />
-      <recent name="$PROJECT_DIR$/gym_trading/envs" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gym_trading/envs" />
     </key>
   </component>
@@ -100,6 +106,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/DataLoader.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="GANPrices" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gym-trading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym_trading/envs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym_trading/envs/GANPrices.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -152,35 +180,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="gym-trading" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.example" />
+        <item itemvalue="Python.GANPrices" />
         <item itemvalue="Python.TradingGame" />
         <item itemvalue="Python.DataLoader" />
         <item itemvalue="Python.AAV" />
-        <item itemvalue="Python.test (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -278,7 +284,16 @@
       <workItem from="1598981557313" duration="447000" />
       <workItem from="1598982061215" duration="136000" />
       <workItem from="1598982220538" duration="3000" />
-      <workItem from="1598982234686" duration="8405000" />
+      <workItem from="1598982234686" duration="8470000" />
+      <workItem from="1598993560010" duration="1160000" />
+      <workItem from="1599047056516" duration="55000" />
+      <workItem from="1599047156818" duration="24000" />
+      <workItem from="1599047851124" duration="36000" />
+      <workItem from="1599051899477" duration="322000" />
+      <workItem from="1599053759209" duration="96000" />
+      <workItem from="1600595194398" duration="2597000" />
+      <workItem from="1600630361174" duration="960000" />
+      <workItem from="1600632125604" duration="3656000" />
     </task>
     <task id="LOCAL-00001" summary="download data from url">
       <created>1586681240610</created>
@@ -525,14 +540,20 @@
       <option name="project" value="LOCAL" />
       <updated>1598615450470</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="BTC - XRP - ETH">
+      <created>1598992505112</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1598992505112</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="bug fixed" />
     <MESSAGE value="criptos added" />
     <MESSAGE value="new reward" />
     <MESSAGE value="new order" />
@@ -557,51 +578,55 @@
     <MESSAGE value="Allen and Karjalainen Reward" />
     <MESSAGE value="Multiple reward function choices" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="BTC - XRP - ETH" />
+    <option name="LAST_COMMIT_MESSAGE" value="BTC - XRP - ETH" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="387" y="339" width="927" height="403" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600632825562">
+      <screen x="41" y="34" width="1639" height="1016" />
+    </state>
+    <state x="387" y="339" width="927" height="403" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/41.34.1639.1016@41.34.1639.1016" timestamp="1600632825562" />
     <state x="529" y="197" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598092172965">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
     <state x="529" y="197" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/41.34.1639.1016@41.34.1639.1016" timestamp="1598092172965" />
-    <state x="439" y="146" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/46.27.1320.741@46.27.1320.741" timestamp="1591354583207" />
     <state x="539" y="197" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/55.34.1625.1016@55.34.1625.1016" timestamp="1597829993459" />
     <state x="554" y="451" width="602" height="180" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog" timestamp="1597953598082">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
     <state x="554" y="451" width="602" height="180" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog/41.34.1639.1016@41.34.1639.1016" timestamp="1597953598082" />
-    <state x="289" y="34" width="938" height="845" key="CommitChangelistDialog2" timestamp="1598615450405">
+    <state x="289" y="34" width="938" height="845" key="CommitChangelistDialog2" timestamp="1598992505026">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state x="289" y="34" width="938" height="845" key="CommitChangelistDialog2/41.34.1639.1016@41.34.1639.1016" timestamp="1598615450405" />
+    <state x="289" y="34" width="938" height="845" key="CommitChangelistDialog2/41.34.1639.1016@41.34.1639.1016" timestamp="1598992505026" />
     <state x="246" y="27" width="912" height="741" key="CommitChangelistDialog2/46.27.1320.741@46.27.1320.741" timestamp="1597347928624" />
     <state x="301" y="34" width="860" height="845" key="CommitChangelistDialog2/55.34.1625.1016@55.34.1625.1016" timestamp="1597835299478" />
     <state x="630" y="285" width="450" height="512" key="FileChooserDialogImpl" timestamp="1598991987343">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
     <state x="630" y="285" width="450" height="512" key="FileChooserDialogImpl/41.34.1639.1016@41.34.1639.1016" timestamp="1598991987343" />
-    <state width="1593" height="71" key="GridCell.Tab.0.bottom" timestamp="1598992401667">
+    <state width="1593" height="80" key="GridCell.Tab.0.bottom" timestamp="1600635733270">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state width="1593" height="71" key="GridCell.Tab.0.bottom/41.34.1639.1016@41.34.1639.1016" timestamp="1598992401667" />
+    <state width="1593" height="80" key="GridCell.Tab.0.bottom/41.34.1639.1016@41.34.1639.1016" timestamp="1600635733270" />
     <state width="1274" height="98" key="GridCell.Tab.0.bottom/46.27.1320.741@46.27.1320.741" timestamp="1597334729796" />
     <state width="1579" height="275" key="GridCell.Tab.0.bottom/55.34.1625.1016@55.34.1625.1016" timestamp="1597854630795" />
-    <state width="1593" height="71" key="GridCell.Tab.0.center" timestamp="1598992401667">
+    <state width="1593" height="80" key="GridCell.Tab.0.center" timestamp="1600635733270">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state width="1593" height="71" key="GridCell.Tab.0.center/41.34.1639.1016@41.34.1639.1016" timestamp="1598992401667" />
+    <state width="1593" height="80" key="GridCell.Tab.0.center/41.34.1639.1016@41.34.1639.1016" timestamp="1600635733270" />
     <state width="1274" height="98" key="GridCell.Tab.0.center/46.27.1320.741@46.27.1320.741" timestamp="1597334729794" />
     <state width="1579" height="275" key="GridCell.Tab.0.center/55.34.1625.1016@55.34.1625.1016" timestamp="1597854630795" />
-    <state width="1593" height="71" key="GridCell.Tab.0.left" timestamp="1598992401667">
+    <state width="1593" height="80" key="GridCell.Tab.0.left" timestamp="1600635733269">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state width="1593" height="71" key="GridCell.Tab.0.left/41.34.1639.1016@41.34.1639.1016" timestamp="1598992401667" />
+    <state width="1593" height="80" key="GridCell.Tab.0.left/41.34.1639.1016@41.34.1639.1016" timestamp="1600635733269" />
     <state width="1274" height="98" key="GridCell.Tab.0.left/46.27.1320.741@46.27.1320.741" timestamp="1597334729792" />
     <state width="1579" height="275" key="GridCell.Tab.0.left/55.34.1625.1016@55.34.1625.1016" timestamp="1597854630794" />
-    <state width="1593" height="71" key="GridCell.Tab.0.right" timestamp="1598992401667">
+    <state width="1593" height="80" key="GridCell.Tab.0.right" timestamp="1600635733270">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state width="1593" height="71" key="GridCell.Tab.0.right/41.34.1639.1016@41.34.1639.1016" timestamp="1598992401667" />
+    <state width="1593" height="80" key="GridCell.Tab.0.right/41.34.1639.1016@41.34.1639.1016" timestamp="1600635733270" />
     <state width="1274" height="98" key="GridCell.Tab.0.right/46.27.1320.741@46.27.1320.741" timestamp="1597334729795" />
     <state width="1579" height="275" key="GridCell.Tab.0.right/55.34.1625.1016@55.34.1625.1016" timestamp="1597854630795" />
     <state width="1593" height="329" key="GridCell.Tab.1.bottom" timestamp="1598105211508">
@@ -620,35 +645,32 @@
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
     <state width="1593" height="329" key="GridCell.Tab.1.right/41.34.1639.1016@41.34.1639.1016" timestamp="1598105211507" />
-    <state x="228" y="39" width="1022" height="737" key="SettingsEditor" timestamp="1598982072048">
+    <state x="228" y="39" width="1022" height="737" key="SettingsEditor" timestamp="1600635026435">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state x="228" y="39" key="SettingsEditor/41.34.1639.1016@41.34.1639.1016" timestamp="1598982072048" />
+    <state x="228" y="39" key="SettingsEditor/41.34.1639.1016@41.34.1639.1016" timestamp="1600635026435" />
     <state x="196" y="31" width="1022" height="737" key="SettingsEditor/46.27.1320.741@46.27.1320.741" timestamp="1596269223639" />
     <state x="240" y="39" key="SettingsEditor/55.34.1625.1016@55.34.1625.1016" timestamp="1597610047556" />
-    <state x="359" y="179" width="800" height="526" key="Vcs.Push.Dialog.v2" timestamp="1598615480052">
+    <state x="359" y="179" width="800" height="526" key="Vcs.Push.Dialog.v2" timestamp="1598992512850">
       <screen x="41" y="34" width="1639" height="1016" />
     </state>
-    <state x="359" y="179" width="800" height="526" key="Vcs.Push.Dialog.v2/41.34.1639.1016@41.34.1639.1016" timestamp="1598615480052" />
+    <state x="359" y="179" width="800" height="526" key="Vcs.Push.Dialog.v2/41.34.1639.1016@41.34.1639.1016" timestamp="1598992512850" />
     <state x="302" y="133" width="800" height="535" key="Vcs.Push.Dialog.v2/46.27.1320.741@46.27.1320.741" timestamp="1597347933111" />
     <state x="370" y="179" width="800" height="526" key="Vcs.Push.Dialog.v2/55.34.1625.1016@55.34.1625.1016" timestamp="1597835305767" />
-    <state x="369" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1591302028793">
-      <screen x="46" y="27" width="1320" height="741" />
-    </state>
-    <state x="369" y="89" width="672" height="678" key="search.everywhere.popup/46.27.1320.741@46.27.1320.741" timestamp="1591302028793" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/gym_trading$TradingGame.coverage" NAME="TradingGame Coverage Results" MODIFIED="1598988572408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$example.coverage" NAME="example Coverage Results" MODIFIED="1600635659531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/gym_trading$data_handler.coverage" NAME="data_handler Coverage Results" MODIFIED="1587044262200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1586963385215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$DataLoader.coverage" NAME="DataLoader Coverage Results" MODIFIED="1598986454214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$trading_game.coverage" NAME="trading_game Coverage Results" MODIFIED="1587368547779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$AAV.coverage" NAME="AAV Coverage Results" MODIFIED="1598183911517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs/reward_functions" />
     <SUITE FILE_PATH="coverage/gym_trading$trading_env.coverage" NAME="trading_env Coverage Results" MODIFIED="1586875225759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1597854078935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/gym_trading$TradingGame.coverage" NAME="TradingGame Coverage Results" MODIFIED="1598988572408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
-    <SUITE FILE_PATH="coverage/gym_trading$example.coverage" NAME="example Coverage Results" MODIFIED="1598991928839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/gym_trading$data_handler.coverage" NAME="data_handler Coverage Results" MODIFIED="1587044262200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
-    <SUITE FILE_PATH="coverage/gym_trading$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1586963385215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$AllenKarjalainenReward.coverage" NAME="AllenKarjalainenReward Coverage Results" MODIFIED="1597957610089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
-    <SUITE FILE_PATH="coverage/gym_trading$DataLoader.coverage" NAME="DataLoader Coverage Results" MODIFIED="1598986454214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$chart_handler.coverage" NAME="chart_handler Coverage Results" MODIFIED="1586863592287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
     <SUITE FILE_PATH="coverage/gym_trading$test.coverage" NAME="test Coverage Results" MODIFIED="1586963915495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
-    <SUITE FILE_PATH="coverage/gym_trading$trading_game.coverage" NAME="trading_game Coverage Results" MODIFIED="1587368547779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
+    <SUITE FILE_PATH="coverage/gym_trading$GANPrices.coverage" NAME="GANPrices Coverage Results" MODIFIED="1600633565690" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym_trading/envs" />
   </component>
 </project>

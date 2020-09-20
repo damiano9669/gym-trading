@@ -3,6 +3,7 @@ import copy
 import numpy as np
 
 from gym_trading.envs.DataLoader import get_all_data
+from gym_trading.envs.GANPrices import GANPrices
 from gym_trading.envs.RenderStyle import *
 from gym_trading.envs.Trader import Trader
 from gym_trading.envs.reward_functions.AAV import get_AAV
@@ -21,12 +22,22 @@ class TradingGame(Trader):
                  random_initial_date=False,
                  stack_size=1,
                  fee=0.25,
-                 reward_function='AAV'):
+                 reward_function='AAV',
+                 gan_generation=False,
+                 new_generation_onreset=True):
         """
 
-        :param n_samples: number of samples to load from the database
-        :param stack_size: size of the observations
-        :param fee:
+        :param n_samples: number of total samples
+        :param sampling_every: interval time between two samples.
+                If 1, the interval is 15 minutes, 2 -> 30 minutes and so on
+        :param random_initial_date: the samples can be taken from a randomly starting date
+        :param stack_size: size of the stack of the past observations
+        :param fee: fee for conversion
+        :param reward_function: reward function to choose between ROI, AAV and Allen_and_Karjalainen
+        :param gan_generation: I trained a neural network being able to generate time series like BTC prices.
+                The model has been trained from the BTC historical data of the last 3 years
+        :param new_generation_onreset: If the ga_generation is enable,
+                we can generate new data at each reset of the environment
         """
         super().__init__(init_amount=1.0,
                          init_currency='USD',
@@ -37,6 +48,8 @@ class TradingGame(Trader):
         self.sampling_every = sampling_every
         self.random_initial_date = random_initial_date
         self.stack_size = stack_size
+        self.gan_generation = gan_generation
+        self.new_generation_onreset = new_generation_onreset
 
         if reward_function not in list(self.reward_functions.keys()):
             raise Exception(
@@ -44,7 +57,11 @@ class TradingGame(Trader):
 
         self.reward_function = reward_function
 
-        self.original_data = get_all_data()
+        if self.gan_generation:
+            self.gan = GANPrices(sampling_every if sampling_every is not None else 1)
+            self.original_data = self.gan.get_sample()
+        else:
+            self.original_data = get_all_data()
 
         if self.sampling_every is not None:
             new_dates = []
@@ -66,6 +83,9 @@ class TradingGame(Trader):
 
     def reset(self):
         super(TradingGame, self).reset()
+
+        if self.gan_generation and self.new_generation_onreset:
+            self.original_data = self.gan.get_sample()
 
         if self.n_samples is not None:
             initial_position = np.random.randint(0, len(
@@ -162,18 +182,21 @@ class TradingGame(Trader):
     def buy(self, crypto_currency):
         key = f'{crypto_currency}_price'
         data_now = self.get_data_now()
-        return super(TradingGame, self).buy(price=data_now[key],
-                                            crypto_currency=crypto_currency)
+        performed = super(TradingGame, self).buy(price=data_now[key],
+                                                 crypto_currency=crypto_currency)
+        return performed
 
     def sell(self, crypto_currency):
         key = f'{crypto_currency}_price'
         data_now = self.get_data_now()
-        return super(TradingGame, self).sell(price=data_now[key],
-                                             crypto_currency=crypto_currency)
+        performed = super(TradingGame, self).sell(price=data_now[key],
+                                                  crypto_currency=crypto_currency)
+        return performed
 
     def get_profit(self):
         data_now = self.get_data_now()
-        return super(TradingGame, self).get_profit(data_now[f'{self.current_currency}_price'])
+        return super(TradingGame, self).get_profit(
+            None if self.current_currency == self.init_currency else data_now[f'{self.current_currency}_price'])
 
     def get_reward(self):
         reward = 0
