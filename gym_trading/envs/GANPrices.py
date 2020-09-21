@@ -29,6 +29,7 @@ class GANPrices:
         initial_date = datetime.datetime.today()
         dates = [initial_date - datetime.timedelta(days=x) for x in
                  range(self.sampling_intervals[self.interval]['output_len'])]
+        dates.reverse()
         return {'dates': dates,
                 'BTC_prices': prediction.numpy(),  # the model has been trained only on BTC
                 'XRP_prices': np.zeros(shape=prediction.shape),
