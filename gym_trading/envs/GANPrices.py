@@ -27,7 +27,6 @@ class GANPrices:
 
     def get_sample(self):
         seed = tf.random.normal([1, self.sampling_intervals[self.interval]['seed_size']])
-        print('Random seed', seed)
         prediction = self.model(seed, training=False)[0]
 
         # conversion to numpy
