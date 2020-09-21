@@ -6,12 +6,9 @@ import tensorflow as tf
 
 
 class GANPrices:
-    sampling_intervals = {1: {'model_path': 'models/BTC_generator_model_15minutes',
-                              'seed_size': 100,
-                              'output_len': 1000},
-                          192: {'model_path': 'models/BTC_generator_model_2days',
+    sampling_intervals = {192: {'model_path': 'models/BTC_generator_model_2days',
                                 'seed_size': 100,
-                                'output_len': 100}}
+                                'output_len': 300}}
 
     def __init__(self, sampling_interval):
         self.interval = sampling_interval
@@ -23,22 +20,20 @@ class GANPrices:
         path = Path(__file__).parent / self.sampling_intervals[self.interval]['model_path']
         self.model = tf.keras.models.load_model(path)
 
+        initial_date = datetime.datetime.today()
+        self.dates = [initial_date - datetime.timedelta(days=x) for x in
+                      range(self.sampling_intervals[self.interval]['output_len'])]
+        self.dates.reverse()
+
     def get_sample(self):
         seed = tf.random.normal([1, self.sampling_intervals[self.interval]['seed_size']])
+        print('Random seed', seed)
         prediction = self.model(seed, training=False)[0]
-        initial_date = datetime.datetime.today()
-        dates = [initial_date - datetime.timedelta(days=x) for x in
-                 range(self.sampling_intervals[self.interval]['output_len'])]
-        dates.reverse()
 
-        # converisio to numpy
+        # conversion to numpy
         prediction = prediction.numpy()
-        # all values greater than 0
-        prediction = prediction + np.abs(np.min(prediction))
-        # mutply by a common average bitcoin value
-        prediction = prediction * np.random.randint(5000, 10000)
 
-        return {'dates': dates,
+        return {'dates': self.dates,
                 'BTC_prices': prediction,
                 'XRP_prices': np.zeros(shape=prediction.shape),
                 'ETH_prices': np.zeros(shape=prediction.shape)}

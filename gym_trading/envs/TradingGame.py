@@ -58,24 +58,24 @@ class TradingGame(Trader):
         self.reward_function = reward_function
 
         if self.gan_generation:
-            self.gan = GANPrices(sampling_every if sampling_every is not None else 1)
+            self.gan = GANPrices(sampling_every)
             self.original_data = self.gan.get_sample()
         else:
             self.original_data = get_all_data()
 
-        if self.sampling_every is not None:
-            new_dates = []
-            new_prices = {key: [] for key in list(self.original_data.keys())[1:]}  # [1:] is to skip 'dates'
-            for i in range(len(self.original_data['dates'])):
-                # extract every n samples
-                if i % self.sampling_every == 0:
-                    new_dates.append(self.original_data['dates'][i])
-                    for key in new_prices.keys():
-                        new_prices[key].append(self.original_data[key][i])
-            # set to original data
-            self.original_data['dates'] = new_dates
-            for key in new_prices.keys():
-                self.original_data[key] = np.asarray(new_prices[key])
+            if self.sampling_every is not None:
+                new_dates = []
+                new_prices = {key: [] for key in list(self.original_data.keys())[1:]}  # [1:] is to skip 'dates'
+                for i in range(len(self.original_data['dates'])):
+                    # extract every n samples
+                    if i % self.sampling_every == 0:
+                        new_dates.append(self.original_data['dates'][i])
+                        for key in new_prices.keys():
+                            new_prices[key].append(self.original_data[key][i])
+                # set to original data
+                self.original_data['dates'] = new_dates
+                for key in new_prices.keys():
+                    self.original_data[key] = np.asarray(new_prices[key])
 
         self.data = copy.deepcopy(self.original_data)
 
@@ -86,6 +86,7 @@ class TradingGame(Trader):
 
         if self.gan_generation and self.new_generation_onreset:
             self.original_data = self.gan.get_sample()
+            self.data = copy.deepcopy(self.original_data)
 
         if self.n_samples is not None:
             initial_position = np.random.randint(0, len(
