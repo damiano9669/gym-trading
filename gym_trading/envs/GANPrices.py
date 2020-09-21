@@ -30,7 +30,15 @@ class GANPrices:
         dates = [initial_date - datetime.timedelta(days=x) for x in
                  range(self.sampling_intervals[self.interval]['output_len'])]
         dates.reverse()
+
+        # converisio to numpy
+        prediction = prediction.numpy()
+        # all values greater than 0
+        prediction = prediction + np.abs(np.min(prediction))
+        # mutply by a common average bitcoin value
+        prediction = prediction * np.random.randint(5000, 10000)
+
         return {'dates': dates,
-                'BTC_prices': prediction.numpy(),  # the model has been trained only on BTC
+                'BTC_prices': prediction,
                 'XRP_prices': np.zeros(shape=prediction.shape),
                 'ETH_prices': np.zeros(shape=prediction.shape)}
