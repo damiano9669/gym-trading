@@ -39,7 +39,7 @@ class TradingGame(Trader):
         :param new_generation_onreset: If the ga_generation is enable,
                 we can generate new data at each reset of the environment
         """
-        super().__init__(init_amount=1.0,
+        super().__init__(init_amount=1000.0,
                          init_currency='USD',
                          buy_fee=fee,
                          sell_fee=fee)
@@ -96,6 +96,7 @@ class TradingGame(Trader):
                 self.data[key] = self.original_data[key][
                                  -(self.n_samples + initial_position):-initial_position]
 
+        self.wallets = {'dates': [], 'wallets': []}
         self.rewards = {'dates': [], 'rewards': []}
 
         self.stack = []
@@ -208,6 +209,8 @@ class TradingGame(Trader):
                                                                   n=self.n[key],
                                                                   buy_fee=self.buy_fee, sell_fee=self.sell_fee)
         data_now = self.get_data_now()
+        self.wallets['dates'].append(data_now['date'])
+        self.wallets['wallets'].append(self.amounts[-1])
         self.rewards['dates'].append(data_now['date'])
         self.rewards['rewards'].append(reward)
         return reward
@@ -220,9 +223,13 @@ class TradingGame(Trader):
 
     def plot_chart(self):
 
-        fig, axs = plt.subplots(len(list(self.data.keys())[1:]) + 1, 1, figsize=(15, 20))
+        fig, axs = plt.subplots(len(list(self.data.keys())[1:]) + 2, 1, figsize=(15, 20))
 
-        fig.suptitle(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)')
+        try:
+            fig.suptitle(f'Total profit: {round(self.get_profit(), 2)} % (fee: {self.buy_fee} %)\n'
+                         f'Initial amount: {round(self.amounts[0])} USD - Final amount: {round(self.amounts[-1])} USD')
+        except:
+            pass
 
         for key, ax in zip(list(self.data.keys())[1:], axs[:-1]):
             ax.plot(self.data['dates'], self.data[key], alpha=0.7, label='Price', zorder=1)
@@ -243,11 +250,18 @@ class TradingGame(Trader):
             ax.set_xlabel('Time')
             ax.legend()
 
-        axs[-1].set_title(f'{self.reward_function} Reward Function')
-        axs[-1].plot(self.rewards['dates'], self.rewards['rewards'])
-        axs[-1].plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])),
+        axs[-2].set_title(f'{self.reward_function} Reward Function')
+        axs[-2].plot(self.rewards['dates'], self.rewards['rewards'])
+        axs[-2].plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])),
                      alpha=0)
-        axs[-1].set_ylabel(f'Reward')
+        axs[-2].set_ylabel(f'Reward')
+        axs[-2].set_xlabel('Time')
+
+        axs[-1].set_title('Wallet')
+        axs[-1].plot(self.wallets['dates'], self.wallets['wallets'])
+        axs[-1].plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.wallets['wallets'])),
+                     alpha=0)
+        axs[-1].set_ylabel(f'USD')
         axs[-1].set_xlabel('Time')
 
         for ax in axs:

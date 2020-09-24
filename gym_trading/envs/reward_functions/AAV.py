@@ -25,8 +25,12 @@ def get_AAV(P, I_b, I_s, n, buy_fee=0.25, sell_fee=0.25):
 
     P_b = P_b[:-1] if P_b.shape[0] > P_s.shape[0] else P_b
 
-    incremental_aav = 0
-    for ni, (ps, pb) in enumerate(zip(P_s, P_b)):
-        xi = ps - pb
-        incremental_aav += (xi - incremental_aav) / (ni + 100)  # (ni +1) is for the real incremental mean
-    return incremental_aav
+    # incremental_aav = 0
+    # for ni, (ps, pb) in enumerate(zip(P_s, P_b)):
+    #     xi = ps - pb
+    #     incremental_aav += (xi - incremental_aav) / (ni + 100)  # (ni +1) is for the real incremental mean
+    # return incremental_aav
+    try:
+        return P_s[-1] - P_b[-1]
+    except:
+        return 0

@@ -91,8 +91,6 @@ class TradingEnv(gym.Env):
         if self.normalize:
             for i, crypto_ob in enumerate(crypto_obs):
                 crypto_obs[i] = self.normalize_observation(crypto_ob)
-                # Is the line below necessary?
-                crypto_obs[i] = crypto_obs[i] / (np.max(crypto_obs[i] + 1e-20))
 
         # observation = crypto_obs[0] * crypto_obs[1] * crypto_obs[2]
         observation = np.stack(crypto_obs, axis=-1)
@@ -100,6 +98,6 @@ class TradingEnv(gym.Env):
         return observation
 
     def normalize_observation(self, x):
-        x_mean = np.mean(x)
-        x_std = np.std(x)
-        return (x - x_mean) / (x_std + 1e-20)
+        x_min = np.min(x)
+        x_max = np.max(x)
+        return (x - x_min) / (x_max - x_min + 1e-20)
