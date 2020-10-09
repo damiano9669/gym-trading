@@ -3,6 +3,7 @@ import numpy as np
 from gym.spaces import Discrete
 
 from gym_trading.envs.TradingGame import TradingGame
+from gym_trading.envs.Utils import standard_score_normalization
 
 
 class TradingEnv(gym.Env):
@@ -17,7 +18,12 @@ class TradingEnv(gym.Env):
                  endurance_mode=False,
                  normalize_observation=False,
                  gan_generation=False,
-                 new_generation_onreset=True):
+                 new_generation_onreset=True,
+                 dummy_sine=False,
+                 ema_period=None,
+                 return_ema=False,
+                 training=True,
+                 split=0.8):
         """
 
         :param n_samples: number of total samples
@@ -47,7 +53,12 @@ class TradingEnv(gym.Env):
                                   fee=fee,
                                   reward_function=reward_function,
                                   gan_generation=gan_generation,
-                                  new_generation_onreset=new_generation_onreset)
+                                  new_generation_onreset=new_generation_onreset,
+                                  dummy_sine=dummy_sine,
+                                  ema_period=ema_period,
+                                  return_ema=return_ema,
+                                  training=training,
+                                  split=split)
         ob = self.reset()
         self.observation_space = np.zeros(shape=ob.shape)
 
@@ -90,14 +101,9 @@ class TradingEnv(gym.Env):
 
         if self.normalize:
             for i, crypto_ob in enumerate(crypto_obs):
-                crypto_obs[i] = self.normalize_observation(crypto_ob)
+                crypto_obs[i] = standard_score_normalization(crypto_ob)
 
         # observation = crypto_obs[0] * crypto_obs[1] * crypto_obs[2]
         observation = np.stack(crypto_obs, axis=-1)
 
         return observation
-
-    def normalize_observation(self, x):
-        x_min = np.min(x)
-        x_max = np.max(x)
-        return (x - x_min) / (x_max - x_min + 1e-20)

@@ -3,9 +3,11 @@ import copy
 import numpy as np
 
 from gym_trading.envs.DataLoader import get_all_data
-from gym_trading.envs.GANPrices import GANPrices
 from gym_trading.envs.RenderStyle import *
 from gym_trading.envs.Trader import Trader
+from gym_trading.envs.alternative_curves.DummySine import get_dummy_sine
+from gym_trading.envs.alternative_curves.GANPrices import GANPrices
+from gym_trading.envs.filters.EMA import EMA
 from gym_trading.envs.reward_functions.AAV import get_AAV
 from gym_trading.envs.reward_functions.AllenKarjalainen import get_AllenKarjalainen_excess_return
 from gym_trading.envs.reward_functions.ROI import get_ROI
@@ -24,7 +26,12 @@ class TradingGame(Trader):
                  fee=0.25,
                  reward_function='AAV',
                  gan_generation=False,
-                 new_generation_onreset=True):
+                 new_generation_onreset=True,
+                 dummy_sine=False,
+                 ema_period=None,
+                 return_ema=False,
+                 training=True,
+                 split=0.8):
         """
 
         :param n_samples: number of total samples
@@ -50,6 +57,10 @@ class TradingGame(Trader):
         self.stack_size = stack_size
         self.gan_generation = gan_generation
         self.new_generation_onreset = new_generation_onreset
+        self.ema_period = ema_period
+        self.return_ema = return_ema
+        self.training = training
+        self.split = split
 
         if reward_function not in list(self.reward_functions.keys()):
             raise Exception(
@@ -60,6 +71,8 @@ class TradingGame(Trader):
         if self.gan_generation:
             self.gan = GANPrices(sampling_every)
             self.original_data = self.gan.get_sample()
+        elif dummy_sine:
+            self.original_data = get_dummy_sine(n_samples if n_samples is not None else 100)
         else:
             self.original_data = get_all_data()
 
@@ -77,7 +90,11 @@ class TradingGame(Trader):
                 for key in new_prices.keys():
                     self.original_data[key] = np.asarray(new_prices[key])
 
+        self.original_data = self.split_dataset(self.original_data)
         self.data = copy.deepcopy(self.original_data)
+
+        if self.ema_period is not None:
+            self.emas = {key: EMA(self.ema_period) for key in list(self.original_data.keys())[1:]}
 
         self.reset()
 
@@ -89,12 +106,16 @@ class TradingGame(Trader):
             self.data = copy.deepcopy(self.original_data)
 
         if self.n_samples is not None:
-            initial_position = np.random.randint(0, len(
+            initial_position = np.random.randint(1, len(
                 self.original_data['dates']) - self.n_samples) if self.random_initial_date else 1
             self.data['dates'] = self.original_data['dates'][-(self.n_samples + initial_position):-initial_position]
             for key in list(self.data.keys())[1:]:
                 self.data[key] = self.original_data[key][
                                  -(self.n_samples + initial_position):-initial_position]
+
+        if self.ema_period is not None:
+            for ema in self.emas.values():
+                ema.reset()
 
         self.wallets = {'dates': [], 'wallets': []}
         self.rewards = {'dates': [], 'rewards': []}
@@ -108,6 +129,17 @@ class TradingGame(Trader):
         self.P = {key: [] for key in list(self.data.keys())[1:]}  # prices until now
         self.n = {key: 0 for key in list(self.data.keys())[1:]}  # number of buy-sell pairs
 
+    def split_dataset(self, data):
+        new_data = {}
+        for key, value in data.items():
+            if type(value) == list:
+                new_data[key] = value[:int(len(value) * self.split)] if self.training else value[int(
+                    len(value) * self.split):]
+            else:
+                new_data[key] = value[:int(value.shape[0] * self.split)] if self.training else value[int(
+                    value.shape[0] * self.split):]
+        return new_data
+
     def step(self, action=None):
         """
             To perform a step:
@@ -116,7 +148,7 @@ class TradingGame(Trader):
         :param action: 0 (BUY_BTC),  1 (SELL_BTC), 2 (BUY_XRP), 3 (SELL_XRP), 4 (BUY_ETH), 5 (SELL_ETH)
         :return:
         """
-        # for th computation of the reward
+        # for the computation of the reward
         self.update_reward_parameters(action)
 
         done = False
@@ -125,9 +157,15 @@ class TradingGame(Trader):
             self.current_day_index -= 1
             done = True
 
-        data = self.get_data_now()
+        data_now = self.get_data_now()
+        if self.ema_period is not None:
+            for key in list(data_now.keys())[1:]:
+                self.emas[key + 's'].update(data_now[key])
+                if self.return_ema:
+                    data_now[key] = self.emas[key + 's'].values[-1]
+
         # adding element to the list
-        self.stack.append(data)
+        self.stack.append(data_now)
         # checking if the list exceeds the maximum number
         if len(self.stack) > self.stack_size:
             self.stack.pop(0)
@@ -233,16 +271,23 @@ class TradingGame(Trader):
 
         for key, ax in zip(list(self.data.keys())[1:], axs[:-1]):
             ax.plot(self.data['dates'], self.data[key], alpha=0.7, label='Price', zorder=1)
+            if self.ema_period is not None:
+                ax.plot(self.data['dates'], self.emas[key].values,
+                        c='C3', alpha=0.7, label=f'EMA - perdiod: {self.emas[key].period}', zorder=1)
 
             ax.axvline(self.data['dates'][self.stack_size], 0, 1, c='g', alpha=0.5, label='Start Date')
             ax.axvline(self.get_data_now()['date'], 0, 1, c='r', alpha=0.5, label='End Date')
 
-            ax.scatter([date for i, date in enumerate(self.data['dates']) if self.buy_signals[key][i] == 1],
-                       [date for i, date in enumerate(self.data[key]) if self.buy_signals[key][i] == 1],
+            ax.scatter([date for i, date in enumerate(self.data['dates'][:len(self.buy_signals[key])]) if
+                        self.buy_signals[key][i] == 1],
+                       [date for i, date in enumerate(self.data[key][:len(self.buy_signals[key])]) if
+                        self.buy_signals[key][i] == 1],
                        marker='^', c='g', label='BUY', zorder=2)
 
-            ax.scatter([date for i, date in enumerate(self.data['dates']) if self.sell_signals[key][i] == 1],
-                       [date for i, date in enumerate(self.data[key]) if self.sell_signals[key][i] == 1],
+            ax.scatter([date for i, date in enumerate(self.data['dates'][:len(self.sell_signals[key])]) if
+                        self.sell_signals[key][i] == 1],
+                       [date for i, date in enumerate(self.data[key][:len(self.sell_signals[key])]) if
+                        self.sell_signals[key][i] == 1],
                        marker='v', c='r', label='SELL', zorder=2)
 
             crypto = key.replace('_prices', '')
@@ -251,11 +296,16 @@ class TradingGame(Trader):
             ax.legend()
 
         axs[-2].set_title(f'{self.reward_function} Reward Function')
-        axs[-2].plot(self.rewards['dates'], self.rewards['rewards'])
-        axs[-2].plot(self.data['dates'], np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])),
+        axs[-2].plot(self.rewards['dates'], self.rewards['rewards'],
+                     label='Reward')
+        # axs[-2].plot(self.rewards['dates'], np.cumsum(np.asarray(self.rewards['rewards'])),
+        #              c='C3', label='Cumulative Sum')
+        axs[-2].plot(self.data['dates'],
+                     np.full((len(self.data['dates']),), np.average(self.rewards['rewards'])),
                      alpha=0)
         axs[-2].set_ylabel(f'Reward')
         axs[-2].set_xlabel('Time')
+        axs[-2].legend()
 
         axs[-1].set_title('Wallet')
         axs[-1].plot(self.wallets['dates'], self.wallets['wallets'])
